@@ -116,9 +116,9 @@
         <time datetime="2017-10-06T16:00:00.000Z">2017-10-07</time>
     </p>
     <div class="post-content">
-        <h2 id="项目架构图"><a href="#项目架构图" class="headerlink" title="项目架构图:"></a>项目架构图:</h2><p><img src="../image/项目架构.png" alt=""></p>
+        <h2 id="项目架构图"><a href="#项目架构图" class="headerlink" title="项目架构图:"></a>项目架构图:</h2><p><img src="/img/项目架构.png" alt=""></p>
 <p>这里只写我司的认证中心设计，先从认证流程图开始:</p>
-<p><img src="../image/认证流程.png" alt=""></p>
+<p><img src="/img/认证流程.png" alt=""></p>
 <p>先从第二步开始(Oauth2的认证 <font size="4" color="red">/oauth/login</font> 接口):</p>
 <p><font size="4" color="red">/oauth/login</font> 资源接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Response&lt;Map&lt;String, Object&gt;&gt; login(String username,</div><div class="line">                                               String password, HttpServletRequest request,</div><div class="line">                                               HttpServletResponse response)</div><div class="line">            <span class="keyword">throws</span> HttpRequestMethodNotSupportedException &#123;</div><div class="line">        <span class="comment">// 非空校验（前端也有部分校验）</span></div><div class="line">        Asserts.notEmpty(username);</div><div class="line">        Asserts.notEmpty(password);</div><div class="line">        <span class="comment">// Oauth2的 密码授权模式</span></div><div class="line">        Map&lt;String, String&gt; map = Maps.newHashMap();</div><div class="line">        <span class="comment">// 获取数据库配置的 clientId</span></div><div class="line">        String clientId = $&#123;clientId&#125;;</div><div class="line">        map.put(<span class="string">"username"</span>, username);</div><div class="line">        map.put(<span class="string">"password"</span>, password);</div><div class="line">        map.put(<span class="string">"grant_type"</span>, <span class="string">"password"</span>);</div><div class="line">        map.put(<span class="string">"scope"</span>, <span class="string">"read write trust"</span>); <span class="comment">// 权限共有 read write trust 三种</span></div><div class="line"></div><div class="line">        <span class="comment">// 构建客户端的Authentication</span></div><div class="line">        UsernamePasswordAuthenticationToken token = <span class="keyword">new</span> UsernamePasswordAuthenticationToken(</div><div class="line">                clientId, <span class="string">""</span>, Lists.newArrayList());</div><div class="line">        <span class="comment">// 调用Spring security Oauth2 的postAccessToken 生成 Oauth2AccessToken</span></div><div class="line">        ResponseEntity&lt;OAuth2AccessToken&gt; responseEntity = tokenEndpoint</div><div class="line">                .postAccessToken(token, map);</div><div class="line">        OAuth2AccessToken oAuth2AccessToken = responseEntity.getBody();</div><div class="line"></div><div class="line">        JwtAuthenticationToken authenticationToken = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (oAuth2AccessToken != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// 对生成的token包装成Jwt的实现， tokenProvider是自己写的一个接口，共有两个方法，下文会分析</span></div><div class="line">            authenticationToken = tokenProvider.createToken(request, response,</div><div class="line">                    oAuth2AccessToken);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// 把一些不敏感的信息提取出来</span></div><div class="line">        Map&lt;String, Object&gt; oauthInfo = extract(authenticationToken);</div><div class="line"></div><div class="line">        <span class="comment">// 存入redis</span></div><div class="line">        tokenRedisService.putOauthInfo(authenticationToken.getAccessToken(),oauthInfo);</div><div class="line">        <span class="keyword">return</span> Response.ok(oauthInfo);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>这里首先构建了一个UsernamePasswordAuthenticationToken类型的Authentication.然后调用TokenPoint的postAccessToken方法去创建一个Oauth2AccessToken, 接下来通过Oauth2AccessToken创建一个JwtAuthenticationToken, 在创建JwtAuthentiationToken的时候就会将access_token等信息写入客户端Cookie, 再从token里面取一些不敏感信息返回。</p>
@@ -140,9 +140,9 @@
             标签：
             
     
-        <a href="/tags/spring-security-Oauth2/" title="spring security Oauth2">spring security Oauth2</a> / 
+        <a href="/tags/spring-security/" title="spring security">spring security</a> / 
     
-        <a href="/tags/jwt/" title="jwt">jwt</a>
+        <a href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2</a>
     
 
         </span>
@@ -168,11 +168,7 @@
     
     <span class="prev fl">
         上一篇<br >
-        <a href="/2017/10/09/10-8/">
-            
-                10.1-10.8
-            
-        </a>
+        <a href="javascript: void(0);">没有上一篇了</a>
     </span>
     
 
@@ -282,11 +278,6 @@
         <span class="badge">(2)</span>
     </li>
     
-    <li>
-        <a href="/categories/Weekly/">Weekly</a>
-        <span class="badge">(3)</span>
-    </li>
-    
 </ul>
     </section>
 
@@ -296,9 +287,9 @@
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
-    <a class="tag-item" href="/tags/spring-security-Oauth2/" title="spring security Oauth2">spring security Oauth2 (1)</a>
+    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
   
-    <a class="tag-item" href="/tags/jwt/" title="jwt">jwt (1)</a>
+    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
