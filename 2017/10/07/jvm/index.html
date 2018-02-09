@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
     <meta name="baidu-site-verification" content="dIcXMeY8Ya" />
     
-    <title>文章归档 | Steve</title>
+    <title>无状态RESTFul web服务实现 | Steve</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
     <meta name="keywords" content="Steve, java Web, python, 刘兴厚, 后端开发" >
     <meta name="description" content="Steve的个人博客" >
@@ -46,19 +46,19 @@
         <div class="dropnav icon-paragraph-justify" id="JELON__btnDropNav"></div>
         <ul class="menu hidden" id="JELON__menu">
             
-            <li rel="/archives/index.html" class="item ">
+            <li rel="/2017/10/07/jvm/index.html" class="item ">
                 <a href="/" title="Index" class="icon-home">&nbsp;Index</a>
             </li>
             
-            <li rel="/archives/index.html" class="item ">
+            <li rel="/2017/10/07/jvm/index.html" class="item ">
                 <a href="/weekly/" title="Life" class="icon-lab">&nbsp;Life</a>
             </li>
             
-            <li rel="/archives/index.html" class="item ">
+            <li rel="/2017/10/07/jvm/index.html" class="item ">
                 <a href="/about/" title="About" class="icon-about">&nbsp;About</a>
             </li>
             
-            <li rel="/archives/index.html" class="item ">
+            <li rel="/2017/10/07/jvm/index.html" class="item ">
                 <a href="/comment/" title="Message" class="icon-comment">&nbsp;Message</a>
             </li>
             
@@ -105,116 +105,18 @@
     <div class="container body clearfix">
         <section class="content">
             <div class="content-main widget">
-                <!-- 文章归档 -->
-
-    <h3 class="widget-hd">
-        <strong>
-            
-                文章归档
-            
-        </strong>
-    </h3>
-    
-        <!-- 文章 -->
-<article class="post">
-    <header>
-        <!-- 标签这有且只能显示一个 -->
-        
-        <a class="cat-link" href="/categories/Java/">Java</a>
-        
-        <!-- 文章标题 -->
-        
-    <h3 class="post-title">
-    	<a href="https://995270418l.github.io/2017/10/07/javaOauth2/">
-    		无状态RESTFul web服务实现
-    	</a>
-    </h3>
-
+                <!-- 文章页 -->
+<!-- 文章 -->
+<article class="post article">
+    <header class="text-center">
+        <h3 class="post-title"><span>无状态RESTFul web服务实现</span></h3>
     </header>
-    <p class="post-meta">
+    <p class="post-meta text-center">
         steve 发表于
         <time datetime="2017-10-06T16:00:00.000Z">2017-10-07</time>
-        &nbsp;&nbsp;
-        <span class="post-tags">
-            标签：
-            
-    
-        <a href="/tags/spring-security/" title="spring security">spring security</a> / 
-    
-        <a href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2</a>
-    
-
-        </span>
     </p>
-
     <div class="post-content">
-        <div class="post-excerpt">
-            
-                <h2 id="项目架构图"><a href="#项目架构图" class="headerlink" title="项目架构图:"></a>项目架构图:</h2><p><img src="/img/项目架构.png" alt=""></p>
-<p>这里只写我司的认证中心设计，先从认证流程图开始:</p>
-<p><img src="/img/认证流程.png" alt=""></p>
-<p>先从第二步开始(Oauth2的认证 <font size="4" color="red">/oauth/login</font> 接口):</p>
-<p><font size="4" color="red">/oauth/login</font> 资源接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Response&lt;Map&lt;String, Object&gt;&gt; login(String username,</div><div class="line">                                               String password, HttpServletRequest request,</div><div class="line">                                               HttpServletResponse response)</div><div class="line">            <span class="keyword">throws</span> HttpRequestMethodNotSupportedException &#123;</div><div class="line">        <span class="comment">// 非空校验（前端也有部分校验）</span></div><div class="line">        Asserts.notEmpty(username);</div><div class="line">        Asserts.notEmpty(password);</div><div class="line">        <span class="comment">// Oauth2的 密码授权模式</span></div><div class="line">        Map&lt;String, String&gt; map = Maps.newHashMap();</div><div class="line">        <span class="comment">// 获取数据库配置的 clientId</span></div><div class="line">        String clientId = $&#123;clientId&#125;;</div><div class="line">        map.put(<span class="string">"username"</span>, username);</div><div class="line">        map.put(<span class="string">"password"</span>, password);</div><div class="line">        map.put(<span class="string">"grant_type"</span>, <span class="string">"password"</span>);</div><div class="line">        map.put(<span class="string">"scope"</span>, <span class="string">"read write trust"</span>); <span class="comment">// 权限共有 read write trust 三种</span></div><div class="line"></div><div class="line">        <span class="comment">// 构建客户端的Authentication</span></div><div class="line">        UsernamePasswordAuthenticationToken token = <span class="keyword">new</span> UsernamePasswordAuthenticationToken(</div><div class="line">                clientId, <span class="string">""</span>, Lists.newArrayList());</div><div class="line">        <span class="comment">// 调用Spring security Oauth2 的postAccessToken 生成 Oauth2AccessToken</span></div><div class="line">        ResponseEntity&lt;OAuth2AccessToken&gt; responseEntity = tokenEndpoint</div><div class="line">                .postAccessToken(token, map);</div><div class="line">        OAuth2AccessToken oAuth2AccessToken = responseEntity.getBody();</div><div class="line"></div><div class="line">        JwtAuthenticationToken authenticationToken = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (oAuth2AccessToken != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// 对生成的token包装成Jwt的实现， tokenProvider是自己写的一个接口，共有两个方法，下文会分析</span></div><div class="line">            authenticationToken = tokenProvider.createToken(request, response,</div><div class="line">                    oAuth2AccessToken);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">// 把一些不敏感的信息提取出来</span></div><div class="line">        Map&lt;String, Object&gt; oauthInfo = extract(authenticationToken);</div><div class="line"></div><div class="line">        <span class="comment">// 存入redis</span></div><div class="line">        tokenRedisService.putOauthInfo(authenticationToken.getAccessToken(),oauthInfo);</div><div class="line">        <span class="keyword">return</span> Response.ok(oauthInfo);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>这里首先构建了一个UsernamePasswordAuthenticationToken类型的Authentication.然后调用TokenPoint的postAccessToken方法去创建一个Oauth2AccessToken, 接下来通过Oauth2AccessToken创建一个JwtAuthenticationToken, 在创建JwtAuthentiationToken的时候就会将access_token等信息写入客户端Cookie, 再从token里面取一些不敏感信息返回。</p>
-<p>TokenEnpoint的PostAccessToken方法(Spring 官方实现)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/oauth/token"</span>, method=RequestMethod.POST)</div><div class="line">	<span class="function"><span class="keyword">public</span> ResponseEntity&lt;OAuth2AccessToken&gt; <span class="title">postAccessToken</span><span class="params">(Principal principal, @RequestParam</span></span></div><div class="line"><span class="function"><span class="params">	Map&lt;String, String&gt; parameters)</span> <span class="keyword">throws</span> HttpRequestMethodNotSupportedException </span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (!(principal <span class="keyword">instanceof</span> Authentication)) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> InsufficientAuthenticationException(</div><div class="line">					<span class="string">"There is no client authentication. Try adding an appropriate authentication filter."</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		String clientId = getClientId(principal);</div><div class="line">		ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId);</div><div class="line"></div><div class="line">		TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (clientId != <span class="keyword">null</span> &amp;&amp; !clientId.equals(<span class="string">""</span>)) &#123;</div><div class="line">			<span class="comment">// Only validate the client details if a client authenticated during this</span></div><div class="line">			<span class="comment">// request.</span></div><div class="line">			<span class="keyword">if</span> (!clientId.equals(tokenRequest.getClientId())) &#123;</div><div class="line">				<span class="comment">// double check to make sure that the client ID in the token request is the same as that in the</span></div><div class="line">				<span class="comment">// authenticated client</span></div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> InvalidClientException(<span class="string">"Given client ID does not match authenticated client"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (authenticatedClient != <span class="keyword">null</span>) &#123;</div><div class="line">			oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!StringUtils.hasText(tokenRequest.getGrantType())) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> InvalidRequestException(<span class="string">"Missing grant type"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (tokenRequest.getGrantType().equals(<span class="string">"implicit"</span>)) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> InvalidGrantException(<span class="string">"Implicit grant type not supported from token endpoint"</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (isAuthCodeRequest(parameters)) &#123;</div><div class="line">			<span class="comment">// The scope was requested or determined during the authorization step</span></div><div class="line">			<span class="keyword">if</span> (!tokenRequest.getScope().isEmpty()) &#123;</div><div class="line">				logger.debug(<span class="string">"Clearing scope of incoming token request"</span>);</div><div class="line">				tokenRequest.setScope(Collections.&lt;String&gt; emptySet());</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (isRefreshTokenRequest(parameters)) &#123;</div><div class="line">			<span class="comment">// A refresh token has its own default scopes, so we should ignore any added by the factory here.</span></div><div class="line">			tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));</div><div class="line">		&#125;</div><div class="line">        <span class="comment">// 有五种类型的Granter，我司只实现了两种。</span></div><div class="line">		OAuth2AccessToken token = getTokenGranter().grant(tokenRequest.getGrantType(), tokenRequest);</div><div class="line">		<span class="keyword">if</span> (token == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedGrantTypeException(<span class="string">"Unsupported grant type: "</span> + tokenRequest.getGrantType());</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> getResponse(token);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>接下来将第一步的实现。因为每个服务都是一个资源服务器，所以在资源服务器的配置文件里配置了对应的信息:</p>
-<p>资源服务器的配置文件(省略部分信息):<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(ResourceServerSecurityConfigurer resources)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    resources.resourceId(RESOURCE_ID)</div><div class="line">            .accessDeniedHandler(<span class="keyword">new</span> ThrowAccessDeniedHandler(objectMapper))</div><div class="line">            .authenticationEntryPoint(<span class="keyword">new</span> ThrowEntryPoint(objectMapper))</div><div class="line">            .stateless(<span class="keyword">true</span>)</div><div class="line">             <span class="comment">// 重点是这个配置，通过这个来实现</span></div><div class="line">            .tokenServices(<span class="keyword">new</span> UAALoadBalancerUserInfoTokenServices(loadBalancerClient,resourceServerProperties.getServiceId(), resourceServerProperties.getUserInfoUri()));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里是配置获取用户信息的地址(userInfoUrl).和官方的UserInfoTokenServices不同的是这里用的是从注册中心获取认证中心的实例地址，用到了Ribbon的LoadBalancerClient来根据serviceId获取认证中心的物理地址。核心的getMap方法实现如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">    <span class="function"><span class="keyword">protected</span> Response <span class="title">getMap</span><span class="params">(String path, String accessToken)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</div><div class="line">            LOGGER.debug(<span class="string">"Getting user info from: "</span> + path);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            OAuth2RestOperations restTemplate = <span class="keyword">this</span>.restTemplate;</div><div class="line">            <span class="keyword">if</span> (restTemplate == <span class="keyword">null</span>) &#123;</div><div class="line">                BaseOAuth2ProtectedResourceDetails resource = <span class="keyword">new</span> BaseOAuth2ProtectedResourceDetails();</div><div class="line">                resource.setClientId(<span class="keyword">this</span>.clientId);</div><div class="line">                restTemplate = <span class="keyword">new</span> OAuth2RestTemplate(resource);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            OAuth2AccessToken existingToken = ((OAuth2RestOperations)restTemplate).getOAuth2ClientContext().getAccessToken();</div><div class="line">            <span class="keyword">if</span> (existingToken == <span class="keyword">null</span> || !accessToken.equals(existingToken.getValue())) &#123;</div><div class="line">                DefaultOAuth2AccessToken token = <span class="keyword">new</span> DefaultOAuth2AccessToken(accessToken);</div><div class="line">                token.setTokenType(<span class="keyword">this</span>.tokenType);</div><div class="line">                ((OAuth2RestOperations)restTemplate).getOAuth2ClientContext().setAccessToken(token);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> (Response)((OAuth2RestOperations)restTemplate).getForEntity(path, Response.class, <span class="keyword">new</span> Object[<span class="number">0</span>]).getBody();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception var6) &#123;</div><div class="line">            LOGGER.warn(<span class="string">"Could not fetch user details: "</span> + var6.getClass() + <span class="string">", "</span> + var6.getMessage());</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>和官方的实现不同就是返回值不同。接下来再看认证中心对应的接口实现(/oauth/me):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@RequestMapping</span>(method = RequestMethod.GET, value =<span class="string">"/oauth/me"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">me</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">           @PathVariable(required = <span class="keyword">false</span>)</span> String service,</span></div><div class="line"><span class="function">           OAuth2Authentication auth) </span>&#123;</div><div class="line">       Map&lt;String, Object&gt; me = Collections.EMPTY_MAP;</div><div class="line"></div><div class="line">       <span class="comment">//往用户信息里面添加权限信息</span></div><div class="line">       List&lt;SimpleGrantedAuthorityImpl&gt; authorities = <span class="keyword">new</span> ArrayList&lt;SimpleGrantedAuthorityImpl&gt;();</div><div class="line"></div><div class="line">       logger.info(</div><div class="line">               <span class="string">"/oauth/me request... OAuth2Authentication[&#123;&#125;] service[&#123;&#125;]"</span>,</div><div class="line">               auth, service);</div><div class="line">       <span class="comment">// 认证失败</span></div><div class="line">       <span class="keyword">if</span> (auth == <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> OAuth2Exception(<span class="string">"Authorization message is not null."</span>);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       OAuth2Request request = auth.getOAuth2Request();</div><div class="line">       <span class="keyword">if</span> (request == <span class="keyword">null</span>) &#123;</div><div class="line">           me.clear();</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> OAuth2Exception(<span class="string">"OAuth2Request message is not null."</span>);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       Authentication authentication = auth.getUserAuthentication();</div><div class="line"></div><div class="line">       <span class="comment">// 登录用户授权模式 password,authorization_code,refresh_token</span></div><div class="line">       <span class="keyword">if</span> (authentication <span class="keyword">instanceof</span> UsernamePasswordAuthenticationToken) &#123;</div><div class="line">           UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) authentication;</div><div class="line">           UserDetails userInfo = userService</div><div class="line">                   .selectByUserNameOrMobileOrEmail(usernamePasswordAuthenticationToken</div><div class="line">                           .getName());</div><div class="line">           <span class="comment">// 将密码清空</span></div><div class="line">           userInfo.setLoginPasswd(<span class="string">""</span>);</div><div class="line">           me.clear();</div><div class="line"></div><div class="line">           <span class="comment">// 授权部分</span></div><div class="line">           <span class="comment">//...</span></div><div class="line">           userInfo.setAuthorities(authorities);</div><div class="line">           me.put(<span class="string">"name"</span>, userInfo.getLoginName());</div><div class="line">           <span class="comment">// USERINFO_FIELDS_CACHE 常量是UserDetail的所有属性集合</span></div><div class="line">           <span class="keyword">for</span> (Field field : USERINFO_FIELDS_CACHE) &#123;</div><div class="line">               <span class="comment">// 找寻所有的get方法</span></div><div class="line">               Method m = ReflectionUtils.findMethod(userInfo.getClass(),</div><div class="line">                       SecurityUtils.getMethodName(field.getName()));</div><div class="line">               <span class="keyword">if</span> (<span class="keyword">null</span> != m) &#123;</div><div class="line">                   me.put(field.getName(),</div><div class="line">                           ReflectionUtils.invokeMethod(m, userInfo));</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">return</span> Response.ok(me);</div><div class="line">       &#125;</div><div class="line">       <span class="comment">// 如果不是这几种授权类型，抛出异常</span></div><div class="line">       me.clear();</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> OAuth2Exception(<span class="string">"Bad request."</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>在认证中心创建token时对token还进行了部分操作，这里就不细说了。数据库表设计的话是Oauth2官方提供的那个Schema加上根据Rbac法则设计的业务表。这里看看流程即可。学的只是个思想。</p>
-
-            
-            <p class="more">
-                <a href="https://995270418l.github.io/2017/10/07/javaOauth2/">Read More</a>
-            </p>
-        </div>
-        <div class="post-thumbnail" data-img="">
-            <a href="https://995270418l.github.io/2017/10/07/javaOauth2/" title="无状态RESTFul web服务实现">
-                
-                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/7.jpg" alt="默认配图" >
-                
-            </a>
-        </div>
-    </div>
-</article>
-
-    
-        <!-- 文章 -->
-<article class="post">
-    <header>
-        <!-- 标签这有且只能显示一个 -->
-        
-        <a class="cat-link" href="/categories/Java/">Java</a>
-        
-        <!-- 文章标题 -->
-        
-    <h3 class="post-title">
-    	<a href="https://995270418l.github.io/2017/10/07/jvm/">
-    		无状态RESTFul web服务实现
-    	</a>
-    </h3>
-
-    </header>
-    <p class="post-meta">
-        steve 发表于
-        <time datetime="2017-10-06T16:00:00.000Z">2017-10-07</time>
-        &nbsp;&nbsp;
-        <span class="post-tags">
-            标签：
-            
-    
-        <a href="/tags/jvm/" title="jvm">jvm</a>
-    
-
-        </span>
-    </p>
-
-    <div class="post-content">
-        <div class="post-excerpt">
-            
-                <h2 id="1-各种jvm特点介绍-包含以前的"><a href="#1-各种jvm特点介绍-包含以前的" class="headerlink" title="1.各种jvm特点介绍(包含以前的):"></a>1.各种jvm特点介绍(包含以前的):</h2><ol>
+        <h2 id="1-各种jvm特点介绍-包含以前的"><a href="#1-各种jvm特点介绍-包含以前的" class="headerlink" title="1.各种jvm特点介绍(包含以前的):"></a>1.各种jvm特点介绍(包含以前的):</h2><ol>
 <li>Sun Classic VM (jdk1.1 版本的虚拟机)<blockquote>
 <p>特点: 全世界第一个商用的虚拟机，只能使用纯解释器的方式来执行java代码（解释器和编译器分离）</p>
 </blockquote>
@@ -594,101 +496,138 @@ logger.info(b == c.intern()); // 3
 <p>下麦呢看一下官方实现的类加载器loadClass方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String var1, <span class="keyword">boolean</span> var2) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>.getClassLoadingLock(var1)) &#123;</div><div class="line">            Class var4 = <span class="keyword">this</span>.findLoadedClass(var1);                           <span class="comment">// 检查这个类是否被加载过</span></div><div class="line">            <span class="keyword">if</span> (var4 == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">long</span> var5 = System.nanoTime();</div><div class="line"></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.parent != <span class="keyword">null</span>) &#123;</div><div class="line">                        var4 = <span class="keyword">this</span>.parent.loadClass(var1, <span class="keyword">false</span>);             <span class="comment">// 递归调用父类加载器去尝试加载( 应用程序类加载器 ---&gt; 扩展类加载器  ----&gt; 启动类加载器 )</span></div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        var4 = <span class="keyword">this</span>.findBootstrapClassOrNull(var1);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException var10) &#123;</div><div class="line">                    ;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (var4 == <span class="keyword">null</span>) &#123;                                           <span class="comment">// 如果还是加载不成功，就自己去实现加载功能。</span></div><div class="line">                    <span class="keyword">long</span> var7 = System.nanoTime();</div><div class="line">                    var4 = <span class="keyword">this</span>.findClass(var1);</div><div class="line">                    PerfCounter.getParentDelegationTime().addTime(var7 - var5);</div><div class="line">                    PerfCounter.getFindClassTime().addElapsedTimeFrom(var7);</div><div class="line">                    PerfCounter.getFindClasses().increment();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (var2) &#123;</div><div class="line">                <span class="keyword">this</span>.resolveClass(var4);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> var4;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>扩展:<a href="http://blog.csdn.net/ns_code/article/details/17881581" target="_blank" rel="external">【深入Java虚拟机】之四：类加载机制</a></p>
 
-            
-            <p class="more">
-                <a href="https://995270418l.github.io/2017/10/07/jvm/">Read More</a>
-            </p>
-        </div>
-        <div class="post-thumbnail" data-img="">
-            <a href="https://995270418l.github.io/2017/10/07/jvm/" title="无状态RESTFul web服务实现">
-                
-                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/7.jpg" alt="默认配图" >
-                
-            </a>
-        </div>
     </div>
-</article>
-
-    
-        <!-- 文章 -->
-<article class="post">
-    <header>
-        <!-- 标签这有且只能显示一个 -->
-        
-        <a class="cat-link" href="/categories/Java/">Java</a>
-        
-        <!-- 文章标题 -->
-        
-    <h3 class="post-title">
-    	<a href="https://995270418l.github.io/2017/10/05/jenkinsCI/">
-    		Jenkins实现CI
-    	</a>
-    </h3>
-
-    </header>
     <p class="post-meta">
-        steve 发表于
-        <time datetime="2017-10-04T16:00:00.000Z">2017-10-05</time>
-        &nbsp;&nbsp;
+        <span class="post-cat">分类：
+            <a class="cat-link" href="/categories/Java/">Java</a>
+        </span>
         <span class="post-tags">
             标签：
             
     
-        <a href="/tags/jenkins/" title="jenkins">jenkins</a> / 
-    
-        <a href="/tags/powershell/" title="powershell">powershell</a>
+        <a href="/tags/jvm/" title="jvm">jvm</a>
     
 
         </span>
     </p>
-
-    <div class="post-content">
-        <div class="post-excerpt">
-            
-                <p>目前公司初步涉及微服务架构，那么持续集成就比较重要了，采用的CI的流程如图:<br><img src="/img/jenkinsCI.png" alt=""></p>
-<h3 id="流程说明"><a href="#流程说明" class="headerlink" title="流程说明:"></a>流程说明:</h3><p> 公司的项目需要使用到<font size="3" color="#1077ad">windows</font>服务器，所以初步就这样做了，从<font size="3" color="#1077ad">svn</font>拉取最新的项目进行构建，构建完成之后调用脚本文件发送最新的项目war包至开发和测试的应用启动目录，再配置一个监控目录文件改动的脚本，进而实现启动最新的项目，但每次去服务器的jenkins控制台启动项目不方便，而且不是每个开发者都会jenkins，所以在控制<font size="3" color="#1077ad">jenkins</font>上我又写了一个ps脚本，通过远程在公司内网调用jenkins实现项目的构建，这样一套流程下来，每个开发者提交了项目之后只需启动我给的脚本过一会就能看到上线的效果了.</p>
-<h3 id="具体实现流程"><a href="#具体实现流程" class="headerlink" title="具体实现流程:"></a>具体实现流程:</h3><ol>
-<li>jenkins安装 进入:  <a href="https://jenkins.io/download/" target="_blank" rel="external">Jenkin下载页面</a> 选择 <font size="3" color="#1077ad">Generic Java package(.war)</font><br></li>
-<li>jenkins配置(maven,jdk,svn路径) ，maven项目支持需安装<font size="3" color="#1077ad"> Maven Release Plug-in Plug-in </font> 插件</li>
-<li>创建<font size="3" color="#1077ad">maven</font>项目，配置好就行(开始不需要填写构建后操作)，立即构建会在<font size="3" color="#1077ad">jenkins</font>安装目录下生成<font size="3" color="#1077asssd">workspace</font>和项目目录,我们需要的就是 <font size="3" color="#1077ad">workspace</font>目录,</li>
-<li>将项目构建成功后的<font size="3" color="#1077ad">ps</font>脚本拷贝至<font size="3" color="#1077ad">workspace</font>目录，在项目配置页里面配置调用脚本命令(cmd 调用ps脚本需要特殊配置，下文会讲解)</li>
-<li>到这一步就完成了将最新的项目war包拷贝至开发，测试服务器的功能了，然后在启动远程调用的ps脚本，就可以通过调用jenkins api启动项目的构建了</li>
-</ol>
-<h3 id="脚本讲解"><a href="#脚本讲解" class="headerlink" title="脚本讲解:"></a>脚本讲解:</h3><ol>
-<li>首先是构建成功后的ps脚本:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ps version 2.0 scripts</span></div><div class="line"> </div><div class="line"><span class="comment"># this script is used to copy project to $PROJECTS_HOME after it loaded by jenkins projects</span></div><div class="line"></div><div class="line"><span class="comment">#################### HOW TO USE IT ##########################</span></div><div class="line"><span class="comment"># first copy this script to $JENKINS_HOME (default= "C:\Users\Administrator\.jenkins")</span></div><div class="line"><span class="comment"># then in jenkins project config page ( url = "http://server:port/job/project/configure" it must be maven project) find Post Steps block</span></div><div class="line"><span class="comment"># choose " Execute Windows batch command " and write next code in the input area</span></div><div class="line"><span class="comment">### code in jenkins config page start #####</span></div><div class="line"><span class="comment"># @echo off</span></div><div class="line"><span class="comment"># cd ..</span></div><div class="line"><span class="comment"># powershell.exe -noprofile Set-ExecutionPolicy Unrestricted</span></div><div class="line"><span class="comment"># powershell.exe -file automate.ps1 -job %JOB_NAME%</span></div><div class="line"><span class="comment">### code end ###############################</span></div><div class="line"></div><div class="line"><span class="comment"># this script will auto close after execute over</span></div><div class="line">param(</div><div class="line">  [string]<span class="variable">$job</span>=$(throw <span class="string">"Parameter missing: -job %JOB_NAME%"</span>)</div><div class="line">)</div><div class="line"></div><div class="line"><span class="variable">$configFile</span>=<span class="string">"ps.json"</span></div><div class="line"><span class="variable">$targetDrive</span>=<span class="string">"D:"</span></div><div class="line"><span class="variable">$targetDir</span>=<span class="string">"project-dev"</span></div><div class="line"></div><div class="line"><span class="comment"># 运行中脚本的绝对路劲</span></div><div class="line"><span class="variable">$scriptPath</span>=Split-Path -Parent <span class="variable">$MyInvocation</span>.MyCommand.Definition</div><div class="line"><span class="keyword">if</span>(!(Test-Path <span class="variable">$configFile</span>))&#123;</div><div class="line">     throw <span class="string">"<span class="variable">$configFile</span> 配置文件不存在!"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># 初始化函数</span></div><div class="line"><span class="keyword">function</span> init&#123;</div><div class="line">   <span class="comment">#write-host "init 方法开始执行"</span></div><div class="line">   <span class="variable">$targetPath</span>=<span class="variable">$targetDrive</span>+<span class="string">"\"+<span class="variable">$targetDir</span></span></div><div class="line"><span class="string">   if(!(Test-Path -path <span class="variable">$targetPath</span>))&#123;</span></div><div class="line"><span class="string">       if(!(Test-Path -path <span class="variable">$targetDrive</span>))&#123;</span></div><div class="line"><span class="string">            throw "</span> <span class="variable">$targetDrive</span> 盘符不存在,请创建一个再重试。 <span class="string">"</span></div><div class="line"><span class="string">        &#125;</span></div><div class="line"><span class="string">        New-Item -path <span class="variable">$targetPath</span> -type directory</span></div><div class="line"><span class="string">   &#125;</span></div><div class="line"><span class="string">   return <span class="variable">$targetPath</span></span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">function main&#123;</span></div><div class="line"><span class="string">   #write-host "</span>main 方法开始执行<span class="string">"</span></div><div class="line"><span class="string">   <span class="variable">$targetPath</span>=init</span></div><div class="line"><span class="string">   write-debug "</span><span class="variable">$targetPath</span><span class="string">"</span></div><div class="line"><span class="string">   Start-Sleep -Seconds 10</span></div><div class="line"><span class="string">   <span class="variable">$modules</span>=Get-Content <span class="variable">$configFile</span> -encoding utf8 | ConvertFrom-Json</span></div><div class="line"><span class="string">   foreach(<span class="variable">$module</span> in <span class="variable">$modules</span>)&#123;</span></div><div class="line"><span class="string">      write-debug "</span><span class="variable">$module</span>.server : <span class="variable">$module</span>.port<span class="string">"</span></div><div class="line"><span class="string">      if(<span class="variable">$module</span>.server -eq <span class="variable">$job</span>)&#123;</span></div><div class="line"><span class="string">          # stopserver</span></div><div class="line"><span class="string">          stopServer <span class="variable">$module</span></span></div><div class="line"><span class="string">          copyFile <span class="variable">$module</span> <span class="variable">$targetPath</span></span></div><div class="line"><span class="string">      &#125;</span></div><div class="line"><span class="string">    &#125; </span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">function copyFile(<span class="variable">$module</span>,<span class="variable">$targetPath</span>)&#123;</span></div><div class="line"><span class="string">    #Write-Debug "</span>copyFile 方法开始执行<span class="string">"</span></div><div class="line"><span class="string">    if((<span class="variable">$module</span> -eq "</span><span class="string">") -or (<span class="variable">$module</span> -eq <span class="variable">$null</span>))&#123;</span></div><div class="line"><span class="string">        throw "</span><span class="variable">$module</span> must not be null<span class="string">"</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">    <span class="variable">$date</span>=get-date -format MMdd_HHmm</span></div><div class="line"><span class="string">    <span class="variable">$bacName</span>=<span class="variable">$module</span>.server+"</span>_<span class="string">"+<span class="variable">$date</span>+"</span>_back<span class="string">"+<span class="variable">$module</span>.suffix</span></div><div class="line"><span class="string">    Write-Host "</span>当前脚本执行目录: <span class="variable">$scriptPath</span><span class="string">"</span></div><div class="line"><span class="string">    <span class="variable">$proFloder</span>=<span class="variable">$module</span>.server</span></div><div class="line"><span class="string">    <span class="variable">$copyFileName</span>=<span class="variable">$module</span>.fullName+"</span>-<span class="string">"+<span class="variable">$module</span>.version+<span class="variable">$module</span>.suffix</span></div><div class="line"><span class="string">    Write-Host "</span>备份文件名: <span class="variable">$bacName</span><span class="string">"</span></div><div class="line"><span class="string">    if(Test-Path -path <span class="variable">$targetPath</span>)&#123;</span></div><div class="line"><span class="string">        <span class="variable">$copyFilePath</span>=<span class="variable">$targetPath</span>+"</span>\<span class="string">"+<span class="variable">$proFloder</span></span></div><div class="line"><span class="string">        if(Test-Path -path <span class="variable">$copyFilePath</span>)&#123;</span></div><div class="line"><span class="string">            <span class="variable">$fileName</span>=<span class="variable">$module</span>.fullName+"</span>-<span class="string">"+<span class="variable">$module</span>.version+<span class="variable">$module</span>.suffix</span></div><div class="line"><span class="string">            if(Test-Path -path <span class="variable">$module</span>.server)&#123;</span></div><div class="line"><span class="string">            	<span class="variable">$copy1</span>=<span class="variable">$copyFilePath</span>+"</span>\<span class="string">"+<span class="variable">$fileName</span></span></div><div class="line"><span class="string">            	<span class="variable">$copy2</span>=<span class="variable">$copyFilePath</span>+"</span>\<span class="string">"+<span class="variable">$bacName</span></span></div><div class="line"><span class="string">                Copy-Item <span class="variable">$copy1</span> <span class="variable">$copy2</span></span></div><div class="line"><span class="string">            &#125;else&#123;</span></div><div class="line"><span class="string">                Write-Debug "</span>无需备份<span class="string">"</span></div><div class="line"><span class="string">            &#125;</span></div><div class="line"><span class="string">        &#125;else&#123;</span></div><div class="line"><span class="string">            Write-Debug "</span>目标文件夹不存在<span class="string">"</span></div><div class="line"><span class="string">            New-Item -type directory -Path <span class="variable">$copyFilePath</span></span></div><div class="line"><span class="string">        &#125;</span></div><div class="line"><span class="string">        cd <span class="variable">$scriptPath</span></span></div><div class="line"><span class="string">        <span class="variable">$loadProPath</span>="</span><span class="string">"</span></div><div class="line"><span class="string">        # 公司项目结构不统一，加上这个判断获取文件路径</span></div><div class="line"><span class="string">        if(<span class="variable">$module</span>.hasSecond)&#123;</span></div><div class="line"><span class="string">            <span class="variable">$loadProPath</span>=<span class="variable">$proFloder</span>+"</span>\<span class="string">"+<span class="variable">$module</span>.fullName+"</span>\target<span class="string">"</span></div><div class="line"><span class="string">        &#125;else&#123;</span></div><div class="line"><span class="string">            <span class="variable">$loadProPath</span>=<span class="variable">$proFloder</span>+"</span>\target<span class="string">"</span></div><div class="line"><span class="string">        &#125;</span></div><div class="line"><span class="string">        if(Test-Path -path <span class="variable">$loadProPath</span>)&#123;</span></div><div class="line"><span class="string">            cd <span class="variable">$loadProPath</span></span></div><div class="line"><span class="string">            if(Test-Path -path <span class="variable">$copyFileName</span>)&#123;</span></div><div class="line"><span class="string">            	Copy-Item <span class="variable">$copyFileName</span> <span class="variable">$copyFilePath</span></span></div><div class="line"><span class="string">            &#125;else&#123;</span></div><div class="line"><span class="string">            	write-host "</span>待复制的文件不存在，请重新构建<span class="string">"</span></div><div class="line"><span class="string">            &#125;</span></div><div class="line"><span class="string">        &#125;</span></div><div class="line"><span class="string">    &#125;else&#123;</span></div><div class="line"><span class="string">        Write-Debug "</span><span class="variable">$targetPath</span> 未创建成功<span class="string">"                  #可能权限问题，没遇到过</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"># jenkins和开发服务器放在一起的做法，否则关闭功能单独放在一个脚本里实现</span></div><div class="line"><span class="string">function stopServer(<span class="variable">$module</span>)&#123;</span></div><div class="line"><span class="string">    #Write-Debug "</span>stopServer 方法开始执行<span class="string">"</span></div><div class="line"><span class="string">    <span class="variable">$port</span>=<span class="variable">$module</span>.port</span></div><div class="line"><span class="string">    <span class="variable">$content</span>=(netstat -ano | findstr <span class="variable">$port</span>)  #这里调用的是cmd语法，ps的没这么直接的功能</span></div><div class="line"><span class="string">    if((<span class="variable">$content</span> -eq "</span><span class="string">") -or (<span class="variable">$content</span> -eq <span class="variable">$null</span>))&#123;</span></div><div class="line"><span class="string">        echo "</span>当前端口 <span class="variable">$port</span> 没程序正在运行<span class="string">"</span></div><div class="line"><span class="string">        return</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">    <span class="variable">$content</span>=<span class="variable">$content</span>.split("</span>\n<span class="string">")[0]</span></div><div class="line"><span class="string">    <span class="variable">$proPID</span>=<span class="variable">$content</span>.split("</span> <span class="string">")[-1]</span></div><div class="line"><span class="string">    if(<span class="variable">$proPID</span> -match "</span>[\d]+<span class="string">")&#123;</span></div><div class="line"><span class="string">        Stop-Process -Id <span class="variable">$proPID</span> -Force</span></div><div class="line"><span class="string">    &#125;else&#123;</span></div><div class="line"><span class="string">        echo "</span>进程id为: <span class="variable">$proPID</span> 的进程停止不了，请手动关闭后再试<span class="string">"  #这种情况还没遇到过</span></div><div class="line"><span class="string">    &#125;</span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string">main</span></div></pre></td></tr></table></figure>
-<p>main 函数为脚本的入口，write-debug 是测试的时候输出用的，write-host是正式运行时输出用的<br>由于直接在jenkins里面运行项目会导致关闭困难，所以我们就在外面运行了，上面实现了文件的复制(开发服务器 + 测试服务器),下面就来实现文件的监控，运行，关闭了。文件拷贝至服务器，我们需要监控文件夹的改变才能知道文件更新了，进而才能重启项目，实现更新<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">write-host <span class="string">"jar监听"</span></div><div class="line"><span class="variable">$floder</span>=<span class="string">"X:\project-test"</span> <span class="comment"># 测试服务器上的监控文件</span></div><div class="line"><span class="comment">#文件类型</span></div><div class="line"><span class="variable">$jar</span>=<span class="string">"*.jar"</span></div><div class="line"><span class="comment">#时间间隔</span></div><div class="line"><span class="variable">$timeout</span> = 1  <span class="comment"># 60s</span></div><div class="line"><span class="variable">$projects_path</span> = <span class="string">"configure.txt"</span></div><div class="line"><span class="variable">$bat_path</span> = <span class="string">"..\project-test\bats"</span></div><div class="line"><span class="comment">#创建监控对象</span></div><div class="line"><span class="keyword">if</span>(<span class="built_in">test</span>-path <span class="string">"<span class="variable">$floder</span>"</span>)&#123;</div><div class="line">    Write-Host <span class="string">"文件夹已存在，不需要创建！"</span></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    md <span class="variable">$floder</span></div><div class="line">&#125;</div><div class="line"><span class="comment">#监控所有jar文件的改变</span></div><div class="line"><span class="variable">$jar_watch</span> = new-object System.IO.FileSystemWatcher <span class="variable">$floder</span>,<span class="variable">$jar</span></div><div class="line"><span class="variable">$jar_watch</span>.IncludeSubDirectories = <span class="variable">$true</span> </div><div class="line">Write-Host <span class="string">"Ctrl+C 退出文件夹的监控"</span></div><div class="line"><span class="keyword">while</span>(<span class="variable">$true</span>)&#123;</div><div class="line">    <span class="variable">$jar_result</span> = <span class="variable">$jar_watch</span>.WaitForChanged(<span class="string">'Changed'</span>,<span class="variable">$timeout</span>)</div><div class="line">    <span class="keyword">if</span> (<span class="variable">$jar_result</span>.TimedOut -eq <span class="variable">$false</span>)</div><div class="line">   &#123;</div><div class="line">    </div><div class="line">       <span class="variable">$lastof</span> = <span class="variable">$jar_result</span>.Name.LastIndexOf(<span class="string">"\")</span></div><div class="line"><span class="string">       #覆盖的项目名称</span></div><div class="line"><span class="string">       <span class="variable">$jar_name</span> =  <span class="variable">$jar_result</span>.Name.Substring(<span class="variable">$lastof</span> + 1)</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">       #write-host <span class="variable">$jar_name</span></span></div><div class="line"><span class="string">       #读取项目数组</span></div><div class="line"><span class="string">       <span class="variable">$array_projects</span> = Get-Content <span class="variable">$projects_path</span> </span></div><div class="line"><span class="string">       #write-host <span class="variable">$array_projects</span>.Contains(<span class="variable">$war_name</span>)</span></div><div class="line"><span class="string">       foreach(<span class="variable">$pa</span> in <span class="variable">$array_projects</span>) &#123;</span></div><div class="line"><span class="string">       		write-host <span class="variable">$pa</span></span></div><div class="line"><span class="string">           if(<span class="variable">$jar_name</span>.contains(<span class="variable">$pa</span>)) &#123;</span></div><div class="line"><span class="string">               <span class="variable">$bat_name</span> = "</span>start<span class="string">"+<span class="variable">$pa</span>.Split("</span>.<span class="string">")[0]+"</span>.bat<span class="string">" </span></div><div class="line"><span class="string">                 write-host <span class="variable">$jar_name</span></span></div><div class="line"><span class="string">                 cd <span class="variable">$bat_path</span></span></div><div class="line"><span class="string">                 start <span class="variable">$bat_name</span></span></div><div class="line"><span class="string">            &#125;  </span></div><div class="line"><span class="string">       &#125;      </span></div><div class="line"><span class="string">   &#125; </span></div><div class="line"><span class="string">&#125;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">write-host "</span>取消监控<span class="string">"</span></div></pre></td></tr></table></figure></p>
-<p>这是jar类型文件的监控，只监控change事件的文件改变。然后先启动关闭脚本关闭项目，再启动启动脚本启动项目。启动和关闭就不贴了。上面有关闭的部分代码，启动的话就和普通命令一样了。接下来再看看远程api操作jenkins进行构建:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">##################### HOW TO USE IT ########################</span></div><div class="line"><span class="comment">## 自动构建项目脚本，通过jenkins的远程api调用来实现的</span></div><div class="line"><span class="comment">## 构建的项目是根据文件名字而变化的，所以必须保证文件名的正确性(大小写敏感)</span></div><div class="line"></div><div class="line"><span class="variable">$user</span> = <span class="string">"xx"</span></div><div class="line"><span class="variable">$password</span> = <span class="string">"xx"</span></div><div class="line"><span class="variable">$pair</span> = <span class="string">"<span class="variable">$($user)</span>:<span class="variable">$($password)</span>"</span></div><div class="line"><span class="variable">$job</span> = <span class="variable">$MyInvocation</span>.MyCommand.Name.Split(<span class="string">'.'</span>)[0]</div><div class="line"><span class="variable">$url</span> = <span class="string">"//serverurl/job/"</span>+ <span class="variable">$job</span> + <span class="string">"/build"</span></div><div class="line"></div><div class="line"><span class="variable">$encodedCreds</span> = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(<span class="variable">$pair</span>))</div><div class="line"></div><div class="line"><span class="variable">$basicAuthValue</span> = <span class="string">"Basic <span class="variable">$encodedCreds</span>"</span></div><div class="line"></div><div class="line"><span class="variable">$basicHeader</span> = @&#123;</div><div class="line">    Authorization = <span class="variable">$basicAuthValue</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">Invoke-WebRequest -Uri http:<span class="variable">$url</span> -Method Post -Headers <span class="variable">$basicHeader</span></div></pre></td></tr></table></figure>
-<p>这是通过设置headers来进行basic authentication的。/job/jobname/build/ 来进行执行构建请求。jobname是根据文件名来获取的，所以只需要一个文件，改个名字，其他微服务就都能跑了。</p>
-<blockquote>
-<p>在有些系统里powershell脚本默认是记事本打开的，需要改变默认打开方式，在打开方式这里选择</p>
-<p><font size="3" color="#1077ad">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</font> 为默认打开方式,首次执行powershell脚本还需要在cmd窗口执行以下命令  <font size="3" color="#1077ad"> powershell.exe -noprofile Set-ExecutionPolicy Unrestricted</font> 开启执行权限</p>
-</blockquote>
-
-            
-            <p class="more">
-                <a href="https://995270418l.github.io/2017/10/05/jenkinsCI/">Read More</a>
-            </p>
-        </div>
-        <div class="post-thumbnail" data-img="">
-            <a href="https://995270418l.github.io/2017/10/05/jenkinsCI/" title="Jenkins实现CI">
-                
-                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/5.jpg" alt="默认配图" >
-                
-            </a>
-        </div>
-    </div>
 </article>
+<!-- 分享按钮 -->
+
+  <div class="article-share clearfix text-center">
+    <div class="share-area">
+      <span class="share-txt">分享到：</span>
+      <a href="javascript: window.open('http://service.weibo.com/share/share.php?url=' + encodeURIComponent(location.href) + '&title=' + document.title + '&language=zh_cn');" class="share-icon weibo"></a>
+      <a href="javascript: alert('请复制链接到微信并发送');" class="share-icon wechat"></a>
+      <a href="javascript: window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + encodeURIComponent(location.href) + '&title=' + document.title);" class="share-icon qqzone"></a>
+      <a href="javascript: window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(location.href) + '&desc=Jelon个人博客&title=' + document.title + '&callback=' + encodeURIComponent(location.href));" class="share-icon qq"></a>
+      <a href="javascript: window.open('http://shuo.douban.com/!service/share?href=' + encodeURIComponent(location.href) + '&name=' + document.title + '&text=' + document.title);" class="share-icon douban"></a>
+    </div>
+  </div>
+
+
+<!-- 上一篇/下一篇 -->
+
+<div class="article-nav clearfix">
+    
+    <span class="prev fl">
+        上一篇<br >
+        <a href="/2017/10/07/javaOauth2/">
+            
+                无状态RESTFul web服务实现
+            
+        </a>
+    </span>
+    
 
     
+    <span class="next fr">
+        下一篇<br >
+        <a href="/2017/10/05/jenkinsCI/">
+            
+                Jenkins实现CI
+            
+        </a>
+    </span>
+    
+</div>
 
-    
-    <nav class="page-navigator">
-        <span class="page-number current">1</span>
-    </nav>
-    
+<!-- 文章评论 -->
+
+  <script src="/js/comment.js"></script>
+  <div id="comments" class="comment">
+    <!--
+    <div class="sign-bar">
+      GitHub 已登录!
+      <span class="sign-link">登出</span>
+    </div>
+    <section class="box">
+      <div class="com-avatar"><img src="/img/jelon.jpg" alt="avatar"></div>
+      <div class="com-text">
+        <div class="main">
+          <textarea class="text-area-edited show" placeholder="欢迎评论！"></textarea>
+          <div class="text-area-preview"></div>
+        </div>
+        <div class="switch">
+          <div class="switch-item on">编辑</div>
+          <div class="switch-item">预览</div>
+        </div>
+        <div class="button">提交</div>
+      </div>
+    </section>
+    <section class="tips">注：评论支持 markdown 语法！</section>
+    <section class="list-wrap">
+      <ul class="list">
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">张德龙</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like liked">已赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">333333</div>
+          </div>
+        </li>
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">刘德华</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like">点赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">vvvvv</div>
+          </div>
+        </li>
+      </ul>
+      <div class="page-nav">
+        <a href="javascript: void(0);" class="item">1</a>
+        <a href="javascript: void(0);" class="item">2</a>
+        <a href="javascript: void(0);" class="item current">3</a>
+      </div>
+    </section>
+    -->
+  </div>
+  <script>
+  JELON.Comment({
+    container: 'comments',
+    label: 'jvm' || '2017/10/07/jvm/',
+    owner: '995270418L',
+    repo: 'comment-repo',
+    clientId: 'b19aa0caf436bdffd3d3',
+    clientSecret: 'e5bd24e0add753e4eb80383ff83964ba913f3393'
+  });
+  </script>
 
 
             </div>
