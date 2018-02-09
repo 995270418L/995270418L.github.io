@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
     <meta name="baidu-site-verification" content="dIcXMeY8Ya" />
     
-    <title>`jvm`标签下的文章 | Steve</title>
+    <title>jvm学习(java se8) | Steve</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
     <meta name="keywords" content="Steve, java Web, python, 刘兴厚, 后端开发" >
     <meta name="description" content="Steve的个人博客" >
@@ -46,19 +46,19 @@
         <div class="dropnav icon-paragraph-justify" id="JELON__btnDropNav"></div>
         <ul class="menu hidden" id="JELON__menu">
             
-            <li rel="/tags/jvm/index.html" class="item ">
+            <li rel="/2018/01/31/jvm/index.html" class="item ">
                 <a href="/" title="Index" class="icon-home">&nbsp;Index</a>
             </li>
             
-            <li rel="/tags/jvm/index.html" class="item ">
+            <li rel="/2018/01/31/jvm/index.html" class="item ">
                 <a href="/weekly/" title="Life" class="icon-lab">&nbsp;Life</a>
             </li>
             
-            <li rel="/tags/jvm/index.html" class="item ">
+            <li rel="/2018/01/31/jvm/index.html" class="item ">
                 <a href="/about/" title="About" class="icon-about">&nbsp;About</a>
             </li>
             
-            <li rel="/tags/jvm/index.html" class="item ">
+            <li rel="/2018/01/31/jvm/index.html" class="item ">
                 <a href="/comment/" title="Message" class="icon-comment">&nbsp;Message</a>
             </li>
             
@@ -105,50 +105,18 @@
     <div class="container body clearfix">
         <section class="content">
             <div class="content-main widget">
-                <!-- 按标签分类 -->
-
-    <h3 class="widget-hd">
-        <strong>
-            
-                `jvm`标签下的文章
-            
-        </strong>
-    </h3>
-    
-        <!-- 文章 -->
-<article class="post">
-    <header>
-        <!-- 标签这有且只能显示一个 -->
-        
-        <a class="cat-link" href="/categories/Java/">Java</a>
-        
-        <!-- 文章标题 -->
-        
-    <h3 class="post-title">
-    	<a href="https://995270418l.github.io/2018/01/31/jvm/">
-    		jvm学习(java se8)
-    	</a>
-    </h3>
-
+                <!-- 文章页 -->
+<!-- 文章 -->
+<article class="post article">
+    <header class="text-center">
+        <h3 class="post-title"><span>jvm学习(java se8)</span></h3>
     </header>
-    <p class="post-meta">
+    <p class="post-meta text-center">
         steve 发表于
         <time datetime="2018-01-30T16:00:00.000Z">2018-01-31</time>
-        &nbsp;&nbsp;
-        <span class="post-tags">
-            标签：
-            
-    
-        <a href="/tags/jvm/" title="jvm">jvm</a>
-    
-
-        </span>
     </p>
-
     <div class="post-content">
-        <div class="post-excerpt">
-            
-                <h2 id="1-各种jvm特点介绍-包含以前的"><a href="#1-各种jvm特点介绍-包含以前的" class="headerlink" title="1.各种jvm特点介绍(包含以前的):"></a>1.各种jvm特点介绍(包含以前的):</h2><ol>
+        <h2 id="1-各种jvm特点介绍-包含以前的"><a href="#1-各种jvm特点介绍-包含以前的" class="headerlink" title="1.各种jvm特点介绍(包含以前的):"></a>1.各种jvm特点介绍(包含以前的):</h2><ol>
 <li>Sun Classic VM (jdk1.1 版本的虚拟机)<blockquote>
 <p>特点: 全世界第一个商用的虚拟机，只能使用纯解释器的方式来执行java代码（解释器和编译器分离）</p>
 </blockquote>
@@ -528,28 +496,134 @@ logger.info(b == c.intern()); // 3
 <p>下麦呢看一下官方实现的类加载器loadClass方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String var1, <span class="keyword">boolean</span> var2) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>.getClassLoadingLock(var1)) &#123;</div><div class="line">            Class var4 = <span class="keyword">this</span>.findLoadedClass(var1);                           <span class="comment">// 检查这个类是否被加载过</span></div><div class="line">            <span class="keyword">if</span> (var4 == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">long</span> var5 = System.nanoTime();</div><div class="line"></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.parent != <span class="keyword">null</span>) &#123;</div><div class="line">                        var4 = <span class="keyword">this</span>.parent.loadClass(var1, <span class="keyword">false</span>);             <span class="comment">// 递归调用父类加载器去尝试加载( 应用程序类加载器 ---&gt; 扩展类加载器  ----&gt; 启动类加载器 )</span></div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        var4 = <span class="keyword">this</span>.findBootstrapClassOrNull(var1);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException var10) &#123;</div><div class="line">                    ;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (var4 == <span class="keyword">null</span>) &#123;                                           <span class="comment">// 如果还是加载不成功，就自己去实现加载功能。</span></div><div class="line">                    <span class="keyword">long</span> var7 = System.nanoTime();</div><div class="line">                    var4 = <span class="keyword">this</span>.findClass(var1);</div><div class="line">                    PerfCounter.getParentDelegationTime().addTime(var7 - var5);</div><div class="line">                    PerfCounter.getFindClassTime().addElapsedTimeFrom(var7);</div><div class="line">                    PerfCounter.getFindClasses().increment();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (var2) &#123;</div><div class="line">                <span class="keyword">this</span>.resolveClass(var4);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> var4;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>扩展:<a href="http://blog.csdn.net/ns_code/article/details/17881581" target="_blank" rel="external">【深入Java虚拟机】之四：类加载机制</a></p>
 
-            
-            <p class="more">
-                <a href="https://995270418l.github.io/2018/01/31/jvm/">Read More</a>
-            </p>
-        </div>
-        <div class="post-thumbnail" data-img="">
-            <a href="https://995270418l.github.io/2018/01/31/jvm/" title="jvm学习(java se8)">
-                
-                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/1.jpg" alt="默认配图" >
-                
-            </a>
-        </div>
     </div>
+    <p class="post-meta">
+        <span class="post-cat">分类：
+            <a class="cat-link" href="/categories/Java/">Java</a>
+        </span>
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/jvm/" title="jvm">jvm</a>
+    
+
+        </span>
+    </p>
 </article>
+<!-- 分享按钮 -->
+
+  <div class="article-share clearfix text-center">
+    <div class="share-area">
+      <span class="share-txt">分享到：</span>
+      <a href="javascript: window.open('http://service.weibo.com/share/share.php?url=' + encodeURIComponent(location.href) + '&title=' + document.title + '&language=zh_cn');" class="share-icon weibo"></a>
+      <a href="javascript: alert('请复制链接到微信并发送');" class="share-icon wechat"></a>
+      <a href="javascript: window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + encodeURIComponent(location.href) + '&title=' + document.title);" class="share-icon qqzone"></a>
+      <a href="javascript: window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(location.href) + '&desc=Jelon个人博客&title=' + document.title + '&callback=' + encodeURIComponent(location.href));" class="share-icon qq"></a>
+      <a href="javascript: window.open('http://shuo.douban.com/!service/share?href=' + encodeURIComponent(location.href) + '&name=' + document.title + '&text=' + document.title);" class="share-icon douban"></a>
+    </div>
+  </div>
+
+
+<!-- 上一篇/下一篇 -->
+
+<div class="article-nav clearfix">
+    
+    <span class="prev fl">
+        上一篇<br >
+        <a href="javascript: void(0);">没有上一篇了</a>
+    </span>
+    
 
     
+    <span class="next fr">
+        下一篇<br >
+        <a href="/2017/10/07/javaOauth2/">
+            
+                无状态RESTFul web服务实现
+            
+        </a>
+    </span>
+    
+</div>
 
-    
-    <nav class="page-navigator">
-        <span class="page-number current">1</span>
-    </nav>
-    
+<!-- 文章评论 -->
+
+  <script src="/js/comment.js"></script>
+  <div id="comments" class="comment">
+    <!--
+    <div class="sign-bar">
+      GitHub 已登录!
+      <span class="sign-link">登出</span>
+    </div>
+    <section class="box">
+      <div class="com-avatar"><img src="/img/jelon.jpg" alt="avatar"></div>
+      <div class="com-text">
+        <div class="main">
+          <textarea class="text-area-edited show" placeholder="欢迎评论！"></textarea>
+          <div class="text-area-preview"></div>
+        </div>
+        <div class="switch">
+          <div class="switch-item on">编辑</div>
+          <div class="switch-item">预览</div>
+        </div>
+        <div class="button">提交</div>
+      </div>
+    </section>
+    <section class="tips">注：评论支持 markdown 语法！</section>
+    <section class="list-wrap">
+      <ul class="list">
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">张德龙</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like liked">已赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">333333</div>
+          </div>
+        </li>
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">刘德华</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like">点赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">vvvvv</div>
+          </div>
+        </li>
+      </ul>
+      <div class="page-nav">
+        <a href="javascript: void(0);" class="item">1</a>
+        <a href="javascript: void(0);" class="item">2</a>
+        <a href="javascript: void(0);" class="item current">3</a>
+      </div>
+    </section>
+    -->
+  </div>
+  <script>
+  JELON.Comment({
+    container: 'comments',
+    label: 'jvm' || '2018/01/31/jvm/',
+    owner: '995270418L',
+    repo: 'comment-repo',
+    clientId: 'b19aa0caf436bdffd3d3',
+    clientSecret: 'e5bd24e0add753e4eb80383ff83964ba913f3393'
+  });
+  </script>
 
 
             </div>
