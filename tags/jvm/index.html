@@ -215,7 +215,25 @@ logger.info(b == c.intern()); // 3
 </ol>
 </li>
 </ul>
-<p>扩展: <a href="http://blog.csdn.net/suifeng3051/article/details/48292193" target="_blank" rel="external">JVM内存管理及GC机制</a></p>
+<h3 id="3-4-垃圾收集器"><a href="#3-4-垃圾收集器" class="headerlink" title="3.4 垃圾收集器"></a>3.4 垃圾收集器</h3><ul>
+<li>Serial 垃圾收集器<br>Serial垃圾收集器是最初的垃圾收集器，在GC的时候需要停止用户线程，如果待回收对象太大会造成卡顿现象，适合于client端的java应用。</li>
+</ul>
+<p><img src="/img/Serial.png" alt=""></p>
+<ul>
+<li>ParNew 垃圾收集器<br>在Serial垃圾收集器的基础上增加了并发收集的实现。可和Cms垃圾收集器一起工作(ParNew负责新生代的收集工作)，</li>
+</ul>
+<p><img src="/img/ParNew.png" alt=""></p>
+<ul>
+<li><p>Parallel 垃圾收集器<br>也是并行的多线程收集器，只不过关注点在于控制垃圾收集的吞吐量（其他的关注点在于减少垃圾的收集时间）。</p>
+</li>
+<li><p>Cms垃圾收集器<br>这个是可以并发执行的一款垃圾收集器,执行流程如下图:</p>
+</li>
+</ul>
+<p><img src="/img/cms.png" alt=""></p>
+<ul>
+<li>G1 垃圾收集器<br>目前为止最牛逼的垃圾收集器，智能型垃圾收集器，虽然原理和流程和Cms垃圾收集器一样，但是里面却有几个不同的概念，比如Region，可预测时间模型等等。</li>
+</ul>
+<p>参考: <a href="https://crowhawk.github.io/2017/08/15/jvm_3/" target="_blank" rel="external">深入理解JVM(3)——7种垃圾收集器</a><br>扩展: <a href="http://blog.csdn.net/suifeng3051/article/details/48292193" target="_blank" rel="external">JVM内存管理及GC机制</a></p>
 <h2 id="4-内存分配"><a href="#4-内存分配" class="headerlink" title="4 内存分配"></a>4 内存分配</h2><h3 id="4-1-对象优先分配到Eden区上"><a href="#4-1-对象优先分配到Eden区上" class="headerlink" title="4.1 对象优先分配到Eden区上"></a>4.1 对象优先分配到Eden区上</h3><p>在jvm中，除大对象以外，所有的对象几乎都是优先分配Eden区里面，看以下代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> M = <span class="number">1024</span> * <span class="number">1024</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="keyword">byte</span>[] b1 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * M];</div><div class="line">    <span class="keyword">byte</span>[] b2 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * M];</div><div class="line">    <span class="keyword">byte</span>[] b3 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * M];</div><div class="line">    <span class="keyword">byte</span>[] b4 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span> * M];</div><div class="line"></div><div class="line">    System.gc();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>配置运行参数为: -Xms20m -Xmx20m -Xmn10m  -verbose:gc -XX:+PrintGCDetails -XX:SurvivorRatio=8 运行结果如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[GC (Allocation Failure) [PSYoungGen: <span class="number">6914</span>K-&gt;<span class="number">952</span>K(<span class="number">9216</span>K)] <span class="number">6914</span>K-&gt;<span class="number">5056</span>K(<span class="number">19456</span>K), <span class="number">0.0045301</span> secs] [Times: user=<span class="number">0.05</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </div><div class="line">[GC (System.gc()) --[PSYoungGen: <span class="number">7252</span>K-&gt;<span class="number">7252</span>K(<span class="number">9216</span>K)] <span class="number">11356</span>K-&gt;<span class="number">13412</span>K(<span class="number">19456</span>K), <span class="number">0.0019800</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </div><div class="line">[<span class="function">Full <span class="title">GC</span> <span class="params">(System.gc()</span>) [PSYoungGen: 7252K-&gt;4840<span class="title">K</span><span class="params">(<span class="number">9216</span>K)</span>] [ParOldGen: 6160K-&gt;6145<span class="title">K</span><span class="params">(<span class="number">10240</span>K)</span>] 13412K-&gt;10986<span class="title">K</span><span class="params">(<span class="number">19456</span>K)</span>, [Metaspace: 3494K-&gt;3494<span class="title">K</span><span class="params">(<span class="number">1056768</span>K)</span>], 0.0071106 secs] [Times: user</span>=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.01</span> secs] </div><div class="line">Heap</div><div class="line"> PSYoungGen      total <span class="number">9216</span>K, used <span class="number">5087</span>K [<span class="number">0x00000000ff600000</span>, <span class="number">0x0000000100000000</span>, <span class="number">0x0000000100000000</span>)</div><div class="line">  eden space <span class="number">8192</span>K, <span class="number">62</span>% used [<span class="number">0x00000000ff600000</span>,<span class="number">0x00000000ffaf7c38</span>,<span class="number">0x00000000ffe00000</span>)</div><div class="line">  from space <span class="number">1024</span>K, <span class="number">0</span>% used [<span class="number">0x00000000ffe00000</span>,<span class="number">0x00000000ffe00000</span>,<span class="number">0x00000000fff00000</span>)</div><div class="line">  to   space <span class="number">1024</span>K, <span class="number">0</span>% used [<span class="number">0x00000000fff00000</span>,<span class="number">0x00000000fff00000</span>,<span class="number">0x0000000100000000</span>)</div><div class="line"> ParOldGen       total <span class="number">10240</span>K, used <span class="number">6145</span>K [<span class="number">0x00000000fec00000</span>, <span class="number">0x00000000ff600000</span>, <span class="number">0x00000000ff600000</span>)</div><div class="line">  object space <span class="number">10240</span>K, <span class="number">60</span>% used [<span class="number">0x00000000fec00000</span>,<span class="number">0x00000000ff200518</span>,<span class="number">0x00000000ff600000</span>)</div><div class="line"> Metaspace       used <span class="number">3509</span>K, capacity <span class="number">4498</span>K, committed <span class="number">4864</span>K, reserved <span class="number">1056768</span>K</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">space</span>    <span class="title">used</span> 387<span class="title">K</span>, <span class="title">capacity</span> 390<span class="title">K</span>, <span class="title">committed</span> 512<span class="title">K</span>, <span class="title">reserved</span> 1048576<span class="title">K</span></span></div></pre></td></tr></table></figure></p>
 <p>这里设置了Eden区大小为8M，两个Survivor区各1M，老年代10M。开始将b1,b2,b3都分配在Eden区，在分配b4的时候，会用到空间分配担保(-XX:+HandlePromotionFailure)技术(jdk8默认开启),然后会将b1,b2,b3 分配至老年代，b4分配到Eden区，占4M</p>
@@ -576,6 +594,8 @@ logger.info(b == c.intern()); // 3
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
+    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
+  
     <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
   
     <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
@@ -583,8 +603,6 @@ logger.info(b == c.intern()); // 3
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
-  
-    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
   
 </div>
     </section>
