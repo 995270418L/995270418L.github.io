@@ -167,6 +167,76 @@
 </article>
 
     
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
+        <a class="cat-link" href="/categories/Java/">Java</a>
+        
+        <!-- 文章标题 -->
+        
+    <h3 class="post-title">
+    	<a href="https://995270418l.github.io/2018/03/01/dp/">
+    		动态规划
+    	</a>
+    </h3>
+
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-02-28T16:00:00.000Z">2018-03-01</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/算法/" title="算法">算法</a>
+    
+
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <h3 id="从典例开始了解动态规划的前世今生"><a href="#从典例开始了解动态规划的前世今生" class="headerlink" title="从典例开始了解动态规划的前世今生"></a>从典例开始了解动态规划的前世今生</h3><p>问: 有4种面值为1，5，10，25的货币，可以重复使用，需要凑成1000元，问共有多少种货币组成方案？<br>分析问题:</p>
+<ul>
+<li>当使用0张面值为5元的货币，剩下由{1，10，25}组成1000元的方案总数计为 res1</li>
+<li>当使用1张面值为5元的货币，剩下由{1,10,25}组成的995元的方案总数计为 res2</li>
+<li>…</li>
+<li>当使用199张面值为5元的货币，剩下由{1,10,25}组成的5元的方案总数计为 res200</li>
+<li>当使用200张面值为5元的货币，剩下由{1,10,25}组成的0元的方案总数计为 res201</li>
+</ul>
+<p>上述求方案总数的方法都会用到一个递归函数。<br>那么这里总的方案数为上述结果的累加，即: res1 + res2 + … + res201</p>
+<p>这里就可以定义这个递归函数: int(int[] arr, index , aim);<br>这个递归函数表示的含义是如果用arr[index … N-1] 的面值货币组成的 aim 目标钱数的方案总数<br>于是就可以得到以下代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">violence</span><span class="params">(<span class="keyword">int</span>[] source, <span class="keyword">int</span> index, <span class="keyword">int</span> aim)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;  <span class="comment">// 方案总数</span></div><div class="line">    <span class="keyword">if</span>(index == source.length)&#123;</div><div class="line">        res = aim == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>; <span class="comment">// aim 为 0 表示这种方案可行，所以res = 1; 结果累加即可</span></div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; source[index] * i &lt;= aim ; i++)&#123;</div><div class="line">            <span class="comment">// 固定一种货币情况下的递归函数求计算总数</span></div><div class="line">            res += violence(source,index ++ , aim -  source[index] * i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法又叫暴力搜索算法。但是有个重复计算的问题，比如说在已经使用0张5元和1张10元的情况下，会求volience(source,2,990)的值。当使用2张5元和0张10元的情况下，也会求一次violence(source,2,990)的值。这就造成了重复计算的问题，这种问题在这个题目中出现的次数非常之多，所以我们需要将这些计算过结果的情况保存下来，所以出现了下面将要介绍的记忆搜索算法。</p>
+<p>这里的记忆搜索算法的记忆是怎么实现的呢？需要怎样记忆？记忆什么内容？这些问题将是我们需要进一步探讨的。<br>从上面的分析可知，因为source参数是不变的，只有index和aim值是变化的。所以我们需要记忆的就是violence(index, aim)的值。有两个可变参数，所以我们用一个二维数组的map来记忆这个值。记为 int[][] map = new int[i][j];<br>i 为index 的大小 +1 ，j 为 aim的大小 + 1。 map[i][j]的值就表示当index = i， aim = j的情况时的方案总数。代码实现:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">memory</span><span class="params">(<span class="keyword">int</span>[] source, <span class="keyword">int</span> index, <span class="keyword">int</span> aim,<span class="keyword">int</span>[][] map)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>; </div><div class="line">    <span class="keyword">if</span>(index == source.length)&#123;</div><div class="line">        res = aim == <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>; </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">int</span> mapValue = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; source[index] * i &lt;= aim ; i++)&#123;</div><div class="line">            mapValue = map[index + <span class="number">1</span>][aim-source[index]*i];</div><div class="line">            <span class="keyword">if</span>(mapValue != <span class="number">0</span>)&#123;</div><div class="line">                res += mapValue == -<span class="number">1</span> ? <span class="number">0</span> : mapValue;</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                res += violence(source,index ++ , aim -  source[index] * i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    map[index][aim] = res == <span class="number">0</span> ? -<span class="number">1</span> : res;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的这个记忆搜索算法就相当于动态规划的一种形态了。下面讲讲两者的区别和联系:</p>
+<ul>
+<li>记忆搜索不关心达到某一个递归过程的路径，只是单纯的对计算过的递归过程进行记录，避免重复递归的过程。</li>
+<li>动态规划严格规定了到达目标的路径，只能依次计算得到结果。后面的结果严格依赖前面的计算结果。</li>
+<li>两者都是用空间换时间的做法，也都有枚举的过程，一个有顺序，一个没顺序。</li>
+</ul>
+<p>就多了一个有顺序的枚举过程，为什么一定要去学动态规划呢？那正是因为有顺序的枚举，才有了可以优化算法的空间。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">dpm</span><span class="params">(<span class="keyword">int</span>[ ] source, <span class="keyword">int</span> aim, <span class="keyword">int</span>[][] dp)</span></span>&#123;</div><div class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;dp.length;i++)&#123;</div><div class="line">        dp[i][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;dp[<span class="number">0</span>].length;j++)&#123;</div><div class="line">            <span class="keyword">if</span>( i == <span class="number">0</span> )&#123;</div><div class="line">                dp[i][j] = (j % source[i] == <span class="number">0</span>) ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                <span class="comment">// 未优化</span></div><div class="line">                <span class="comment">// for(int k = 0; k &lt;= aim / source[i] &amp;&amp; (j - source[i] * k) &gt;= 0; k++)&#123;</span></div><div class="line">                <span class="comment">//     dp[i][j] += dp[i-1][j - source[i]*k ];</span></div><div class="line">                <span class="comment">// &#125;</span></div><div class="line">                <span class="comment">// 优化后，少了枚举过程</span></div><div class="line">                dp[i][j] = dp[i-<span class="number">1</span>][j];</div><div class="line">                dp[i][j] += (j - source[i] &gt;= <span class="number">0</span>) ? dp[i][j - source[i]] : <span class="number">0</span> ;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[source.length-<span class="number">1</span>][aim];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体的动态规划过程参考<a href="http://blog.csdn.net/suanzhaogao/article/details/72817980" target="_blank" rel="external">动态规划（1）</a></p>
+
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/03/01/dp/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/03/01/dp/" title="动态规划">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/1.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
 
     
     <nav class="page-navigator">
@@ -204,21 +274,21 @@
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
-    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
+    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
   
-    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
-  
-    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
   
+    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
+  
     <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
   
-    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
+    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
   
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
 </div>
     </section>

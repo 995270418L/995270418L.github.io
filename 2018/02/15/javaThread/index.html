@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
     <meta name="baidu-site-verification" content="dIcXMeY8Ya" />
     
-    <title>`multipartThread`标签下的文章 | Steve</title>
+    <title>java并发编程 | Steve</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
     <meta name="keywords" content="Steve, java Web, python, 刘兴厚, 后端开发" >
     <meta name="description" content="Steve的个人博客" >
@@ -46,19 +46,19 @@
         <div class="dropnav icon-paragraph-justify" id="JELON__btnDropNav"></div>
         <ul class="menu hidden" id="JELON__menu">
             
-            <li rel="/tags/multipartThread/index.html" class="item ">
+            <li rel="/2018/02/15/javaThread/index.html" class="item ">
                 <a href="/" title="Index" class="icon-home">&nbsp;Index</a>
             </li>
             
-            <li rel="/tags/multipartThread/index.html" class="item ">
+            <li rel="/2018/02/15/javaThread/index.html" class="item ">
                 <a href="/weekly/" title="Life" class="icon-lab">&nbsp;Life</a>
             </li>
             
-            <li rel="/tags/multipartThread/index.html" class="item ">
+            <li rel="/2018/02/15/javaThread/index.html" class="item ">
                 <a href="/about/" title="About" class="icon-about">&nbsp;About</a>
             </li>
             
-            <li rel="/tags/multipartThread/index.html" class="item ">
+            <li rel="/2018/02/15/javaThread/index.html" class="item ">
                 <a href="/comment/" title="Message" class="icon-comment">&nbsp;Message</a>
             </li>
             
@@ -105,50 +105,18 @@
     <div class="container body clearfix">
         <section class="content">
             <div class="content-main widget">
-                <!-- 按标签分类 -->
-
-    <h3 class="widget-hd">
-        <strong>
-            
-                `multipartThread`标签下的文章
-            
-        </strong>
-    </h3>
-    
-        <!-- 文章 -->
-<article class="post">
-    <header>
-        <!-- 标签这有且只能显示一个 -->
-        
-        <a class="cat-link" href="/categories/Java/">Java</a>
-        
-        <!-- 文章标题 -->
-        
-    <h3 class="post-title">
-    	<a href="https://995270418l.github.io/2018/02/15/javaThread/">
-    		java并发编程
-    	</a>
-    </h3>
-
+                <!-- 文章页 -->
+<!-- 文章 -->
+<article class="post article">
+    <header class="text-center">
+        <h3 class="post-title"><span>java并发编程</span></h3>
     </header>
-    <p class="post-meta">
+    <p class="post-meta text-center">
         steve 发表于
         <time datetime="2018-02-14T16:00:00.000Z">2018-02-15</time>
-        &nbsp;&nbsp;
-        <span class="post-tags">
-            标签：
-            
-    
-        <a href="/tags/multipartThread/" title="multipartThread">multipartThread</a>
-    
-
-        </span>
     </p>
-
     <div class="post-content">
-        <div class="post-excerpt">
-            
-                <h2 id="1-线程状态"><a href="#1-线程状态" class="headerlink" title="1. 线程状态"></a>1. 线程状态</h2><p>一张图详解java多线程的多种状态以及状态之间的关系<br><img src="/img/threadState.png" alt=""></p>
+        <h2 id="1-线程状态"><a href="#1-线程状态" class="headerlink" title="1. 线程状态"></a>1. 线程状态</h2><p>一张图详解java多线程的多种状态以及状态之间的关系<br><img src="/img/threadState.png" alt=""></p>
 <h2 id="2-多线程的实现方式"><a href="#2-多线程的实现方式" class="headerlink" title="2. 多线程的实现方式"></a>2. 多线程的实现方式</h2><p>在java应用中，共有8中实现多线程的方式，如果是spring应用，还可以有spring的基于注解的多线程开启方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.scheduling.annotation.Async;</div><div class="line"><span class="keyword">import</span> org.springframework.scheduling.annotation.EnableAsync;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Timer;</div><div class="line"><span class="keyword">import</span> java.util.TimerTask;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * <span class="doctag">@Author</span>: steve</span></div><div class="line"><span class="comment"> * <span class="doctag">@Date</span>: Created in 13:33 2018/1/22</span></div><div class="line"><span class="comment"> * <span class="doctag">@Description</span>: 线程的9种创建方式</span></div><div class="line"><span class="comment"> * <span class="doctag">@Modified</span> By:</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span>()</div><div class="line"><span class="meta">@EnableAsync</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 继承Thread类重些run方法来实现新线程</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"Thread change run implements running ...."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 实现Runnable接口来实现新线程的创建</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo2</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                Thread.sleep(<span class="number">3000</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"Runnable implements method ... "</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo3</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt;</span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            System.out.println(<span class="string">"返回值的方式创建线程"</span>);</div><div class="line">            Thread.sleep(<span class="number">3000</span>);</div><div class="line">            System.out.println(<span class="string">"返回值的方式创建线程"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Service</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Demo4</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Async</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printA</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">            <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</div><div class="line">                Thread.sleep(<span class="number">300</span>);</div><div class="line">                System.out.println(<span class="string">"a"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Async</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printB</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">            <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</div><div class="line">                Thread.sleep(<span class="number">300</span>);</div><div class="line">                System.out.println(<span class="string">"b"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">// 1</span></div><div class="line">        Demo1 demo1 = <span class="keyword">new</span> Demo1();</div><div class="line">        demo1.run();</div><div class="line"></div><div class="line">        <span class="comment">// 2</span></div><div class="line">        Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Demo2());</div><div class="line">        thread.start();</div><div class="line"></div><div class="line">        <span class="comment">// 3</span></div><div class="line">        FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;Integer&gt;(<span class="keyword">new</span> Demo3());</div><div class="line">        Thread thread1 = <span class="keyword">new</span> Thread(futureTask);</div><div class="line">        thread1.start();</div><div class="line">        System.out.println(<span class="string">"结束了吗?"</span>);</div><div class="line">        System.out.println(<span class="string">"计算的结果: "</span> + futureTask.get());</div><div class="line"></div><div class="line">        <span class="comment">// 4 匿名内部类</span></div><div class="line">        Thread thread2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"匿名内部类的方式创建线程！！！"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread2.start();</div><div class="line"></div><div class="line">        <span class="comment">// 5</span></div><div class="line">        Thread thread3 = <span class="keyword">new</span> Thread()&#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"重写run方法"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        thread3.start();</div><div class="line"></div><div class="line">        <span class="comment">// 6 Spring实现多线程技术</span></div><div class="line">        AnnotationConfigApplicationContext applicationContext = <span class="keyword">new</span> AnnotationConfigApplicationContext(Main.class);</div><div class="line">        Demo4 threadService = applicationContext.getBean(Demo4.class);</div><div class="line">        threadService.printA();</div><div class="line">        threadService.printB();</div><div class="line"></div><div class="line">        <span class="comment">// 7 lambda 方式实现多线程技术</span></div><div class="line">        List&lt;Integer&gt; lists = <span class="keyword">new</span> ArrayList&lt;Integer&gt;()&#123;</div><div class="line">            &#123;</div><div class="line">                add(<span class="number">1</span>);</div><div class="line">                add(<span class="number">2</span>);</div><div class="line">                add(<span class="number">3</span>);</div><div class="line">                add(<span class="number">4</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        lists.parallelStream().forEach(System.out :: println);</div><div class="line"></div><div class="line">        <span class="comment">// 8 线程池的实现方法</span></div><div class="line">        ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">10</span>); <span class="comment">// 这里可以有多种不同的实现选择</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++)&#123;</div><div class="line">            executorService.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    System.out.println(Thread.currentThread().getName());</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 9 定时器实现多线程</span></div><div class="line">        Timer timer = <span class="keyword">new</span> Timer();</div><div class="line">        timer.schedule(<span class="keyword">new</span> TimerTask() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"定时器的多线程"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;,<span class="number">1000</span>,<span class="number">3000</span>);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="3-线程安全性问题"><a href="#3-线程安全性问题" class="headerlink" title="3.线程安全性问题"></a>3.线程安全性问题</h2><p>先来了解一下java多线程引发安全问题的3个前提</p>
 <ol>
@@ -189,28 +157,138 @@
 <h2 id="4-线程间通信"><a href="#4-线程间通信" class="headerlink" title="4.线程间通信"></a>4.线程间通信</h2><p>这里就举个生产者与消费者的例子来演示线程间的通信。</p>
 <h3 id="4-1-wait-notify-方法"><a href="#4-1-wait-notify-方法" class="headerlink" title="4.1 wait/notify 方法"></a>4.1 wait/notify 方法</h3><p>wait是一个等待方法，和本文开头的流程图说的一样，当线程执行到wait时，进入到等待状态，并同时释放对象的锁，然后只能等待对象的notify或者notifyAll方法唤醒。如果这时候有关闭线程的操作发出，则会抛出 InterruptedException 异常。被唤醒后会继续执行后面的代码。</p>
 
-            
-            <p class="more">
-                <a href="https://995270418l.github.io/2018/02/15/javaThread/">Read More</a>
-            </p>
-        </div>
-        <div class="post-thumbnail" data-img="">
-            <a href="https://995270418l.github.io/2018/02/15/javaThread/" title="java并发编程">
-                
-                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/5.jpg" alt="默认配图" >
-                
-            </a>
-        </div>
     </div>
+    <p class="post-meta">
+        <span class="post-cat">分类：
+            <a class="cat-link" href="/categories/Java/">Java</a>
+        </span>
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/multipartThread/" title="multipartThread">multipartThread</a>
+    
+
+        </span>
+    </p>
 </article>
+<!-- 分享按钮 -->
+
+  <div class="article-share clearfix text-center">
+    <div class="share-area">
+      <span class="share-txt">分享到：</span>
+      <a href="javascript: window.open('http://service.weibo.com/share/share.php?url=' + encodeURIComponent(location.href) + '&title=' + document.title + '&language=zh_cn');" class="share-icon weibo"></a>
+      <a href="javascript: alert('请复制链接到微信并发送');" class="share-icon wechat"></a>
+      <a href="javascript: window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + encodeURIComponent(location.href) + '&title=' + document.title);" class="share-icon qqzone"></a>
+      <a href="javascript: window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + encodeURIComponent(location.href) + '&desc=Jelon个人博客&title=' + document.title + '&callback=' + encodeURIComponent(location.href));" class="share-icon qq"></a>
+      <a href="javascript: window.open('http://shuo.douban.com/!service/share?href=' + encodeURIComponent(location.href) + '&name=' + document.title + '&text=' + document.title);" class="share-icon douban"></a>
+    </div>
+  </div>
+
+
+<!-- 上一篇/下一篇 -->
+
+<div class="article-nav clearfix">
+    
+    <span class="prev fl">
+        上一篇<br >
+        <a href="/2018/03/01/dp/">
+            
+                动态规划
+            
+        </a>
+    </span>
+    
 
     
+    <span class="next fr">
+        下一篇<br >
+        <a href="/2018/01/31/jvm/">
+            
+                jvm学习(java se8)
+            
+        </a>
+    </span>
+    
+</div>
 
-    
-    <nav class="page-navigator">
-        <span class="page-number current">1</span>
-    </nav>
-    
+<!-- 文章评论 -->
+
+  <script src="/js/comment.js"></script>
+  <div id="comments" class="comment">
+    <!--
+    <div class="sign-bar">
+      GitHub 已登录!
+      <span class="sign-link">登出</span>
+    </div>
+    <section class="box">
+      <div class="com-avatar"><img src="/img/jelon.jpg" alt="avatar"></div>
+      <div class="com-text">
+        <div class="main">
+          <textarea class="text-area-edited show" placeholder="欢迎评论！"></textarea>
+          <div class="text-area-preview"></div>
+        </div>
+        <div class="switch">
+          <div class="switch-item on">编辑</div>
+          <div class="switch-item">预览</div>
+        </div>
+        <div class="button">提交</div>
+      </div>
+    </section>
+    <section class="tips">注：评论支持 markdown 语法！</section>
+    <section class="list-wrap">
+      <ul class="list">
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">张德龙</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like liked">已赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">333333</div>
+          </div>
+        </li>
+        <li>
+          <div class="user-avatar">
+            <a href="/">
+              <img src="/img/jelon.jpg" alt="user-avatar">
+            </a>
+          </div>
+          <div class="user-comment">
+            <div class="user-comment-header">
+              <span class="post-name">刘德华</span>
+              <span class="post-time">2017年12月12日</span>
+              <span class="like">点赞</span>
+              <span class="like-num">2</span>
+            </div>
+            <div class="user-comment-body">vvvvv</div>
+          </div>
+        </li>
+      </ul>
+      <div class="page-nav">
+        <a href="javascript: void(0);" class="item">1</a>
+        <a href="javascript: void(0);" class="item">2</a>
+        <a href="javascript: void(0);" class="item current">3</a>
+      </div>
+    </section>
+    -->
+  </div>
+  <script>
+  JELON.Comment({
+    container: 'comments',
+    label: 'javaThread' || '2018/02/15/javaThread/',
+    owner: '995270418L',
+    repo: 'comment-repo',
+    clientId: 'b19aa0caf436bdffd3d3',
+    clientSecret: 'e5bd24e0add753e4eb80383ff83964ba913f3393'
+  });
+  </script>
 
 
             </div>
