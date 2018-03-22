@@ -168,7 +168,7 @@
 <p>参考:<a href="http://www.cnblogs.com/paddix/p/5405678.html" target="_blank" rel="external">Java并发编程：Synchronized底层优化（偏向锁、轻量级锁）</a></p>
 <h3 id="3-1-synchorized"><a href="#3-1-synchorized" class="headerlink" title="3.1 synchorized"></a>3.1 synchorized</h3><p>synchroized从1.6开始变得不再像以前那么的重量级了，它有三个转变阶段，分别为偏向锁，轻量级锁，重量级锁。它的主要作用是锁住对象，<strong>保证只有一个线程能获取到该对象的实例</strong>，从而保证线程安全。它可以使用在方法体中和方法声明中，在方法声明中代表的是锁住这个类的对象，方法体中看实现可以随意锁住某个对象。日常使用建议锁的细粒度越细越好。以前jdk中的Vector类就是通过锁方法而保证线程安全的，现在已经不再使用它了，而Collections中以synchronized 开头的方法锁的是一个mutex对象，而不是类对象。<br>SynchronizedList的get方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (mutex) &#123;<span class="keyword">return</span> list.get(index);&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Vector的部分方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">capacity</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> elementData.length;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    * Returns the number of components in this vector.</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * <span class="doctag">@return</span>  the number of components in this vector</span></div><div class="line"><span class="comment">    */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> elementCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="3-2-volatile-关键字"><a href="#3-2-volatile-关键字" class="headerlink" title="3.2 volatile 关键字"></a>3.2 volatile 关键字</h3><p>有时候只需要保证共享变量在各个线程中的数据的一致性，就不需要使用synchorized这个锁了，只需要在变量声明时加上volatile关键词就行了，它的汇编语义就是一个Lock指令，这个指令会将CPU里的缓存写入系统内存。所以每个线程读取到的数据都是一致的。然而这样也有一个弊端，随着CPU的三级缓存越来越重要了，这样做无非会降低系统的性能。而且volatile的使用也有一个条件，变量真正独立于其他变量和自己以前的值。比如什么 x++ 操作就不行，依赖于以前的x值。 具体使用请参考<a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></p>
+<h3 id="3-2-volatile-关键字"><a href="#3-2-volatile-关键字" class="headerlink" title="3.2 volatile 关键字"></a>3.2 volatile 关键字</h3><p>有时候只需要保证共享变量在各个线程中的数据的一致性，就不需要使用synchorized这个锁了，只需要在变量声明时加上volatile关键词就行了，JMM实现了对volatile的保证：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作，它的汇编语义就是一个Lock指令，这个指令会将CPU里的缓存写入系统内存。所以每个线程读取到的数据都是一致的。然而这样也有一个弊端，随着CPU的三级缓存越来越重要了，这样做无非会降低系统的性能。而且volatile的使用也有一个条件，变量真正独立于其他变量和自己以前的值。比如什么 x++ 操作就不行，依赖于以前的x值。 具体使用请参考<a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></p>
 <h3 id="3-3-Lock-锁"><a href="#3-3-Lock-锁" class="headerlink" title="3.3 Lock 锁"></a>3.3 Lock 锁</h3><p>lock更强调的是锁住代码块，与对象无关。而且他的实现更有针对性。由于是java实现的，所以它拥有许多synchorized没有的特性，比如说公平与非公平锁(内部维护一个FIFO队列)。</p>
 <ul>
 <li>ReentrantLock 这是Lock的一个常用实现，身为一个可重入锁，底层是基于AQS实现的，使用也很简单<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantLockDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</div><div class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();  <span class="comment">// 需要保证多个线程拿到的是同一个lock对象。</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNext</span><span class="params">()</span></span>&#123;</div><div class="line">        lock.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> value++;</div><div class="line">        &#125;<span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -298,6 +298,11 @@
     </li>
     
     <li>
+        <a href="/categories/java/">java</a>
+        <span class="badge">(1)</span>
+    </li>
+    
+    <li>
         <a href="/categories/健康生活/">健康生活</a>
         <span class="badge">(1)</span>
     </li>
@@ -311,21 +316,23 @@
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
-  
-    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
-  
-    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
-  
     <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
   
     <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
-    <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
+    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
+  
+    <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
+  
+    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
+  
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+  
+    <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
   
 </div>
     </section>

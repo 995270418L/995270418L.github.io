@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" >
     <meta name="baidu-site-verification" content="dIcXMeY8Ya" />
     
-    <title>痔疮免开刀疗法 | Steve</title>
+    <title>坑爹的面经 | Steve</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" >
     <meta name="keywords" content="Steve, java Web, python, 刘兴厚, 后端开发" >
     <meta name="description" content="Steve的个人博客" >
@@ -46,19 +46,19 @@
         <div class="dropnav icon-paragraph-justify" id="JELON__btnDropNav"></div>
         <ul class="menu hidden" id="JELON__menu">
             
-            <li rel="/2018/03/09/life/index.html" class="item ">
+            <li rel="/2018/03/21/review/index.html" class="item ">
                 <a href="/" title="Index" class="icon-home">&nbsp;Index</a>
             </li>
             
-            <li rel="/2018/03/09/life/index.html" class="item ">
+            <li rel="/2018/03/21/review/index.html" class="item ">
                 <a href="/weekly/" title="Life" class="icon-lab">&nbsp;Life</a>
             </li>
             
-            <li rel="/2018/03/09/life/index.html" class="item ">
+            <li rel="/2018/03/21/review/index.html" class="item ">
                 <a href="/about/" title="About" class="icon-about">&nbsp;About</a>
             </li>
             
-            <li rel="/2018/03/09/life/index.html" class="item ">
+            <li rel="/2018/03/21/review/index.html" class="item ">
                 <a href="/comment/" title="Message" class="icon-comment">&nbsp;Message</a>
             </li>
             
@@ -109,26 +109,55 @@
 <!-- 文章 -->
 <article class="post article">
     <header class="text-center">
-        <h3 class="post-title"><span>痔疮免开刀疗法</span></h3>
+        <h3 class="post-title"><span>坑爹的面经</span></h3>
     </header>
     <p class="post-meta text-center">
         steve 发表于
-        <time datetime="2018-03-08T16:00:00.000Z">2018-03-09</time>
+        <time datetime="2018-03-20T16:00:00.000Z">2018-03-21</time>
     </p>
     <div class="post-content">
-        <p>黄柏，龙胆草，紫花地丁，白鲜皮，苦参，地肤子，土茯苓，荆芥各20g熬水外洗，每付可洗两天，每日一次，</p>
-<p>再配合吃一般的消炎药，一个月后就会看到效果了。但需要根治还是需要手术。</p>
+        <h2 id="map的底层结构"><a href="#map的底层结构" class="headerlink" title="map的底层结构"></a>map的底层结构</h2><p>jdk8中map底层结构是 数组+链表+红黑树组成的。<br>在map初始化会赋予一个固定长度的数组，放入数据的时候，先对key进行hash操作，计算对应的数组下标，并放入对应数组元素的链表头中，当再次放入key的hash值一样时，会将数据放在对应链表的头部，最先放入的元素在后面.当放入的链表长度大于8时，会用一个红黑树结构的treemap来替换掉原来的链表结构,它的查找时间是O(logn).</p>
+<h2 id="map有哪些实现-以及ConcurrentHashMap的线程安全是怎么实现的"><a href="#map有哪些实现-以及ConcurrentHashMap的线程安全是怎么实现的" class="headerlink" title="map有哪些实现 以及ConcurrentHashMap的线程安全是怎么实现的."></a>map有哪些实现 以及ConcurrentHashMap的线程安全是怎么实现的.</h2><p>HashMap, LinkedHashMap, ConcurrentHashMap.<br>ConcurrentHashMap的线程安全主要是 Synchorized + CAS + volatile 实现的。get方法由于变量是用了Volatile修饰，所以不加锁也能读取到最新的值。put方法加上了Synchorized锁。</p>
+<p>拓展延伸：<a href="https://tech.meituan.com/redblack-tree.html" target="_blank" rel="external">红黑树</a></p>
+<h2 id="Object的方法"><a href="#Object的方法" class="headerlink" title="Object的方法"></a>Object的方法</h2><p>getClass 方法，hashCode方法，toString方法，wait方法，notify方法，clone方法，finalize方法.</p>
+<h2 id="讲讲NIO"><a href="#讲讲NIO" class="headerlink" title="讲讲NIO"></a>讲讲NIO</h2><p>NIO是非阻塞的同步I/O,非阻塞体现在连接是非阻塞的，同步体现在进行I/O操作时是同步等待的。<br>NIO主要有三个主要的概念，Channel，缓冲区Buffer和Selector。Channel是一个通道的意思，负责连接，缓冲区Buffer是一个容器对象，发送给一个Channel的所有对象必须先放入缓冲区Buffer中，同理，从Channel中读取的所有对象也必须从Buffer中读取。Selector就是一个你对发生在Channel上感兴趣的事件做出响应的一个对象，由它告诉你发生了什么事情。<br>注: 深入问问题就是buffer中数据的读写，为什么要调用flip方法(单索引)，</p>
+<h2 id="OSI-7层网络模型"><a href="#OSI-7层网络模型" class="headerlink" title="OSI 7层网络模型"></a>OSI 7层网络模型</h2><p>物理层: 利用传输介质为数据链路层提供物理连接，实现比特流的透明传输</p>
+<p>数据链路层: 将物理层的位流形式的数据封装成帧，传输到上一层. 有MAC/LLC协议..</p>
+<p>网络层: 将数据链路层的数据转换成数据包然后通过路径选择，分段组合，顺序，进/出路由控制将数据从一个网络设备传输到另一个传输设备.</p>
+<p>传输层: 该层起承上启下的作用，将上层协议段数据变成报文的来进行正确传输. 有TCP/IP, UDP协议等等</p>
+<p>会话层: 维持用户程序和网络之间的会话通信，使用远程地址建立连接(域名)</p>
+<p>表示层: 通信数据的加密解密,数据格式的处理</p>
+<p>应用层: 用户与应用程序的交互层.</p>
+<p>第1-3层为通信层，5-7层为资源层，4层为承上启下层。</p>
+<h2 id="用户输入-baidu-com-到-baidu-com-返回数据，期间发生了什么"><a href="#用户输入-baidu-com-到-baidu-com-返回数据，期间发生了什么" class="headerlink" title="用户输入 baidu.com 到 baidu.com 返回数据，期间发生了什么"></a>用户输入 baidu.com 到 baidu.com 返回数据，期间发生了什么</h2><p>客户端通过域名访问DNS服务器得到具体的ip地址，通过这个ip地址发送HTTP会话，建立HTTP长连接, 通过TCP协议对数据进行封装,传输到网络层，网络层找到对应的baidu服务器，服务器再通过负载均衡找到对应的响应服务器.响应服务器再组织数据通过网络层返回数据给用户所在主机，用户的浏览器就会解析返回的数据并渲染显示在用户面前。</p>
+<p>注: 要详细讲的话，很长很长。主要是协议，负载均衡等知识。</p>
+<h2 id="TCP-协议为什么是可靠的"><a href="#TCP-协议为什么是可靠的" class="headerlink" title="TCP 协议为什么是可靠的"></a>TCP 协议为什么是可靠的</h2><p>确认机制: 三次握手同步双方的“序列号+确认号+窗口大小信息”</p>
+<p>重传机制: CheckSum校验失败，丢包或者延时，发送端重传</p>
+<p>数据排序: TCP有专门的序列号SN字段，可提供数据的re-Order</p>
+<p>流量控制: 窗口和计数器的使用,TCP窗口中会指明双方能够发送接收的最大数据量</p>
+<p>拥塞控制: </p>
+<ul>
+<li>“慢启动”（Slow Start）</li>
+<li>“拥塞避免”（Congestion avoidance）</li>
+<li>“快速重传 ”（Fast Retransmit）</li>
+<li>“快速恢复”（Fast Recovery）</li>
+</ul>
+<h2 id="为什么wait和notify方法只能在-Synchorized-块中使用"><a href="#为什么wait和notify方法只能在-Synchorized-块中使用" class="headerlink" title="为什么wait和notify方法只能在 Synchorized 块中使用"></a>为什么wait和notify方法只能在 Synchorized 块中使用</h2><p>抛开再java中不加Synchorized块出现的异常问题，还有可能会导致竞态条件的问题。当另一个线程先调用notify，再调用wait的话，有可能会永远的wait下去。</p>
+<h2 id="SpringBoot启动流程"><a href="#SpringBoot启动流程" class="headerlink" title="SpringBoot启动流程"></a>SpringBoot启动流程</h2><p>先将应用打包成一个jar/war包，再用JarLancher根据jar/war的文件所在url创建一个Archive，然后构建一个LaunchedURLClassLoader类加载器，再去加载我们的应用主类，从而启动引用程序。</p>
+<h2 id="Spring如何处理一个请求"><a href="#Spring如何处理一个请求" class="headerlink" title="Spring如何处理一个请求"></a>Spring如何处理一个请求</h2><p>DispatcherServlet –&gt; HandlerMapping<br>DispathcerServlet –&gt; HandlerMapping –&gt; Controller 方法 –&gt; ModelAndView –&gt; ViewResolver –&gt; 渲染 –&gt; DispatcherServlet     // 返回视图</p>
+<h2 id="方法区OOM"><a href="#方法区OOM" class="headerlink" title="方法区OOM"></a>方法区OOM</h2><p>方法区保存的是Class文件和Meta的相关信息，有类名，访问修饰符，常量池，字段描述，方法描述等。当运行时产生大量的类时就很容易发生OOM(动态代理).</p>
+<h2 id="线程池原理"><a href="#线程池原理" class="headerlink" title="线程池原理"></a>线程池原理</h2><p>除了ScheduledThreadPool的实现原理有点不同，其余几个都是通过 ThreadPoolExecutor 来实现的. ThreadPoolExecutor 内部是通过一个 AtomicInteger 的变量 ctl 来控制, 这个变量的前三位是用来表示线程词的运行状态,后29位表示当前安线程池的数量.</p>
 
     </div>
     <p class="post-meta">
         <span class="post-cat">分类：
-            <a class="cat-link" href="/categories/健康生活/">健康生活</a>
+            <a class="cat-link" href="/categories/java/">java</a>
         </span>
         <span class="post-tags">
             标签：
             
     
-        <a href="/tags/痔疮/" title="痔疮">痔疮</a>
+        <a href="/tags/面试/" title="面试">面试</a>
     
 
         </span>
@@ -154,20 +183,16 @@
     
     <span class="prev fl">
         上一篇<br >
-        <a href="/2018/03/21/review/">
-            
-                坑爹的面经
-            
-        </a>
+        <a href="javascript: void(0);">没有上一篇了</a>
     </span>
     
 
     
     <span class="next fr">
         下一篇<br >
-        <a href="/2018/03/01/dp/">
+        <a href="/2018/03/09/life/">
             
-                动态规划
+                痔疮免开刀疗法
             
         </a>
     </span>
@@ -244,7 +269,7 @@
   <script>
   JELON.Comment({
     container: 'comments',
-    label: 'life' || '2018/03/09/life/',
+    label: 'review' || '2018/03/21/review/',
     owner: '995270418L',
     repo: 'comment-repo',
     clientId: 'b19aa0caf436bdffd3d3',

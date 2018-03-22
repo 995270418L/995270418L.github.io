@@ -120,6 +120,87 @@
     <header>
         <!-- 标签这有且只能显示一个 -->
         
+        <a class="cat-link" href="/categories/java/">java</a>
+        
+        <!-- 文章标题 -->
+        
+    <h3 class="post-title">
+    	<a href="https://995270418l.github.io/2018/03/21/review/">
+    		坑爹的面经
+    	</a>
+    </h3>
+
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-03-20T16:00:00.000Z">2018-03-21</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/面试/" title="面试">面试</a>
+    
+
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <h2 id="map的底层结构"><a href="#map的底层结构" class="headerlink" title="map的底层结构"></a>map的底层结构</h2><p>jdk8中map底层结构是 数组+链表+红黑树组成的。<br>在map初始化会赋予一个固定长度的数组，放入数据的时候，先对key进行hash操作，计算对应的数组下标，并放入对应数组元素的链表头中，当再次放入key的hash值一样时，会将数据放在对应链表的头部，最先放入的元素在后面.当放入的链表长度大于8时，会用一个红黑树结构的treemap来替换掉原来的链表结构,它的查找时间是O(logn).</p>
+<h2 id="map有哪些实现-以及ConcurrentHashMap的线程安全是怎么实现的"><a href="#map有哪些实现-以及ConcurrentHashMap的线程安全是怎么实现的" class="headerlink" title="map有哪些实现 以及ConcurrentHashMap的线程安全是怎么实现的."></a>map有哪些实现 以及ConcurrentHashMap的线程安全是怎么实现的.</h2><p>HashMap, LinkedHashMap, ConcurrentHashMap.<br>ConcurrentHashMap的线程安全主要是 Synchorized + CAS + volatile 实现的。get方法由于变量是用了Volatile修饰，所以不加锁也能读取到最新的值。put方法加上了Synchorized锁。</p>
+<p>拓展延伸：<a href="https://tech.meituan.com/redblack-tree.html" target="_blank" rel="external">红黑树</a></p>
+<h2 id="Object的方法"><a href="#Object的方法" class="headerlink" title="Object的方法"></a>Object的方法</h2><p>getClass 方法，hashCode方法，toString方法，wait方法，notify方法，clone方法，finalize方法.</p>
+<h2 id="讲讲NIO"><a href="#讲讲NIO" class="headerlink" title="讲讲NIO"></a>讲讲NIO</h2><p>NIO是非阻塞的同步I/O,非阻塞体现在连接是非阻塞的，同步体现在进行I/O操作时是同步等待的。<br>NIO主要有三个主要的概念，Channel，缓冲区Buffer和Selector。Channel是一个通道的意思，负责连接，缓冲区Buffer是一个容器对象，发送给一个Channel的所有对象必须先放入缓冲区Buffer中，同理，从Channel中读取的所有对象也必须从Buffer中读取。Selector就是一个你对发生在Channel上感兴趣的事件做出响应的一个对象，由它告诉你发生了什么事情。<br>注: 深入问问题就是buffer中数据的读写，为什么要调用flip方法(单索引)，</p>
+<h2 id="OSI-7层网络模型"><a href="#OSI-7层网络模型" class="headerlink" title="OSI 7层网络模型"></a>OSI 7层网络模型</h2><p>物理层: 利用传输介质为数据链路层提供物理连接，实现比特流的透明传输</p>
+<p>数据链路层: 将物理层的位流形式的数据封装成帧，传输到上一层. 有MAC/LLC协议..</p>
+<p>网络层: 将数据链路层的数据转换成数据包然后通过路径选择，分段组合，顺序，进/出路由控制将数据从一个网络设备传输到另一个传输设备.</p>
+<p>传输层: 该层起承上启下的作用，将上层协议段数据变成报文的来进行正确传输. 有TCP/IP, UDP协议等等</p>
+<p>会话层: 维持用户程序和网络之间的会话通信，使用远程地址建立连接(域名)</p>
+<p>表示层: 通信数据的加密解密,数据格式的处理</p>
+<p>应用层: 用户与应用程序的交互层.</p>
+<p>第1-3层为通信层，5-7层为资源层，4层为承上启下层。</p>
+<h2 id="用户输入-baidu-com-到-baidu-com-返回数据，期间发生了什么"><a href="#用户输入-baidu-com-到-baidu-com-返回数据，期间发生了什么" class="headerlink" title="用户输入 baidu.com 到 baidu.com 返回数据，期间发生了什么"></a>用户输入 baidu.com 到 baidu.com 返回数据，期间发生了什么</h2><p>客户端通过域名访问DNS服务器得到具体的ip地址，通过这个ip地址发送HTTP会话，建立HTTP长连接, 通过TCP协议对数据进行封装,传输到网络层，网络层找到对应的baidu服务器，服务器再通过负载均衡找到对应的响应服务器.响应服务器再组织数据通过网络层返回数据给用户所在主机，用户的浏览器就会解析返回的数据并渲染显示在用户面前。</p>
+<p>注: 要详细讲的话，很长很长。主要是协议，负载均衡等知识。</p>
+<h2 id="TCP-协议为什么是可靠的"><a href="#TCP-协议为什么是可靠的" class="headerlink" title="TCP 协议为什么是可靠的"></a>TCP 协议为什么是可靠的</h2><p>确认机制: 三次握手同步双方的“序列号+确认号+窗口大小信息”</p>
+<p>重传机制: CheckSum校验失败，丢包或者延时，发送端重传</p>
+<p>数据排序: TCP有专门的序列号SN字段，可提供数据的re-Order</p>
+<p>流量控制: 窗口和计数器的使用,TCP窗口中会指明双方能够发送接收的最大数据量</p>
+<p>拥塞控制: </p>
+<ul>
+<li>“慢启动”（Slow Start）</li>
+<li>“拥塞避免”（Congestion avoidance）</li>
+<li>“快速重传 ”（Fast Retransmit）</li>
+<li>“快速恢复”（Fast Recovery）</li>
+</ul>
+<h2 id="为什么wait和notify方法只能在-Synchorized-块中使用"><a href="#为什么wait和notify方法只能在-Synchorized-块中使用" class="headerlink" title="为什么wait和notify方法只能在 Synchorized 块中使用"></a>为什么wait和notify方法只能在 Synchorized 块中使用</h2><p>抛开再java中不加Synchorized块出现的异常问题，还有可能会导致竞态条件的问题。当另一个线程先调用notify，再调用wait的话，有可能会永远的wait下去。</p>
+<h2 id="SpringBoot启动流程"><a href="#SpringBoot启动流程" class="headerlink" title="SpringBoot启动流程"></a>SpringBoot启动流程</h2><p>先将应用打包成一个jar/war包，再用JarLancher根据jar/war的文件所在url创建一个Archive，然后构建一个LaunchedURLClassLoader类加载器，再去加载我们的应用主类，从而启动引用程序。</p>
+<h2 id="Spring如何处理一个请求"><a href="#Spring如何处理一个请求" class="headerlink" title="Spring如何处理一个请求"></a>Spring如何处理一个请求</h2><p>DispatcherServlet –&gt; HandlerMapping<br>DispathcerServlet –&gt; HandlerMapping –&gt; Controller 方法 –&gt; ModelAndView –&gt; ViewResolver –&gt; 渲染 –&gt; DispatcherServlet     // 返回视图</p>
+<h2 id="方法区OOM"><a href="#方法区OOM" class="headerlink" title="方法区OOM"></a>方法区OOM</h2><p>方法区保存的是Class文件和Meta的相关信息，有类名，访问修饰符，常量池，字段描述，方法描述等。当运行时产生大量的类时就很容易发生OOM(动态代理).</p>
+<h2 id="线程池原理"><a href="#线程池原理" class="headerlink" title="线程池原理"></a>线程池原理</h2><p>除了ScheduledThreadPool的实现原理有点不同，其余几个都是通过 ThreadPoolExecutor 来实现的. ThreadPoolExecutor 内部是通过一个 AtomicInteger 的变量 ctl 来控制, 这个变量的前三位是用来表示线程词的运行状态,后29位表示当前安线程池的数量.</p>
+
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/03/21/review/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/03/21/review/" title="坑爹的面经">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/1.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
         <a class="cat-link" href="/categories/健康生活/">健康生活</a>
         
         <!-- 文章标题 -->
@@ -290,7 +371,7 @@
 <p>参考:<a href="http://www.cnblogs.com/paddix/p/5405678.html" target="_blank" rel="external">Java并发编程：Synchronized底层优化（偏向锁、轻量级锁）</a></p>
 <h3 id="3-1-synchorized"><a href="#3-1-synchorized" class="headerlink" title="3.1 synchorized"></a>3.1 synchorized</h3><p>synchroized从1.6开始变得不再像以前那么的重量级了，它有三个转变阶段，分别为偏向锁，轻量级锁，重量级锁。它的主要作用是锁住对象，<strong>保证只有一个线程能获取到该对象的实例</strong>，从而保证线程安全。它可以使用在方法体中和方法声明中，在方法声明中代表的是锁住这个类的对象，方法体中看实现可以随意锁住某个对象。日常使用建议锁的细粒度越细越好。以前jdk中的Vector类就是通过锁方法而保证线程安全的，现在已经不再使用它了，而Collections中以synchronized 开头的方法锁的是一个mutex对象，而不是类对象。<br>SynchronizedList的get方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (mutex) &#123;<span class="keyword">return</span> list.get(index);&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Vector的部分方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">capacity</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> elementData.length;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">    * Returns the number of components in this vector.</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * <span class="doctag">@return</span>  the number of components in this vector</span></div><div class="line"><span class="comment">    */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> elementCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="3-2-volatile-关键字"><a href="#3-2-volatile-关键字" class="headerlink" title="3.2 volatile 关键字"></a>3.2 volatile 关键字</h3><p>有时候只需要保证共享变量在各个线程中的数据的一致性，就不需要使用synchorized这个锁了，只需要在变量声明时加上volatile关键词就行了，它的汇编语义就是一个Lock指令，这个指令会将CPU里的缓存写入系统内存。所以每个线程读取到的数据都是一致的。然而这样也有一个弊端，随着CPU的三级缓存越来越重要了，这样做无非会降低系统的性能。而且volatile的使用也有一个条件，变量真正独立于其他变量和自己以前的值。比如什么 x++ 操作就不行，依赖于以前的x值。 具体使用请参考<a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></p>
+<h3 id="3-2-volatile-关键字"><a href="#3-2-volatile-关键字" class="headerlink" title="3.2 volatile 关键字"></a>3.2 volatile 关键字</h3><p>有时候只需要保证共享变量在各个线程中的数据的一致性，就不需要使用synchorized这个锁了，只需要在变量声明时加上volatile关键词就行了，JMM实现了对volatile的保证：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作，它的汇编语义就是一个Lock指令，这个指令会将CPU里的缓存写入系统内存。所以每个线程读取到的数据都是一致的。然而这样也有一个弊端，随着CPU的三级缓存越来越重要了，这样做无非会降低系统的性能。而且volatile的使用也有一个条件，变量真正独立于其他变量和自己以前的值。比如什么 x++ 操作就不行，依赖于以前的x值。 具体使用请参考<a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></p>
 <h3 id="3-3-Lock-锁"><a href="#3-3-Lock-锁" class="headerlink" title="3.3 Lock 锁"></a>3.3 Lock 锁</h3><p>lock更强调的是锁住代码块，与对象无关。而且他的实现更有针对性。由于是java实现的，所以它拥有许多synchorized没有的特性，比如说公平与非公平锁(内部维护一个FIFO队列)。</p>
 <ul>
 <li>ReentrantLock 这是Lock的一个常用实现，身为一个可重入锁，底层是基于AQS实现的，使用也很简单<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantLockDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</div><div class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();  <span class="comment">// 需要保证多个线程拿到的是同一个lock对象。</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNext</span><span class="params">()</span></span>&#123;</div><div class="line">        lock.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> value++;</div><div class="line">        &#125;<span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -867,6 +948,11 @@ logger.info(b == c.intern()); // 3
     </li>
     
     <li>
+        <a href="/categories/java/">java</a>
+        <span class="badge">(1)</span>
+    </li>
+    
+    <li>
         <a href="/categories/健康生活/">健康生活</a>
         <span class="badge">(1)</span>
     </li>
@@ -880,21 +966,23 @@ logger.info(b == c.intern()); // 3
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
-  
-    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
-  
-    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
-  
     <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
   
     <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
-    <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
+    <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
+  
+    <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
+  
+    <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
+  
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+  
+    <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
   
 </div>
     </section>
