@@ -167,7 +167,7 @@
 <li>$$f(a) = f(b)$$</li>
 </ol>
 <p>结论: <strong>在$$(a,b)$$上存在一点$$\epsilon$$，使得 $$f’(\epsilon) = 0$$ </strong></p>
-<h3 id="拉格朗日中值定理"><a href="#拉格朗日中值定理" class="headerlink" title="拉格朗日中值定理"></a>拉格朗日中值定理</h3><p>成立条件:</p>
+<h3 id="拉格朗日微分中值定理"><a href="#拉格朗日微分中值定理" class="headerlink" title="拉格朗日微分中值定理"></a>拉格朗日微分中值定理</h3><p>成立条件:</p>
 <ol>
 <li>$$f(x)$$在区间 [a,b] 上是连续的</li>
 <li>$$f(x)$$在区间(a,b)上是可导的</li>
@@ -181,6 +181,91 @@
 <li>对任意 $$x  (a,b), g(x) \ne 0$$</li>
 </ol>
 <p>结论: <strong>在开区间$$(a,b)$$上存在一点$$\epsilon$$ 使得$$\frac{f(b)-f(a)}{g(b)-g(a)} = \frac{f’(\epsilon)}{g’(\epsilon)}$$成立</strong></p>
+<h3 id="泰勒定理"><a href="#泰勒定理" class="headerlink" title="泰勒定理"></a>泰勒定理</h3><p>泰勒定理主要是用来对在区间求具体变量 $(x_0)$ 的函数值时将其等价于求在该区间内 $(x-x_0)$ 的 $n$ 项多项式之和 $P_n(x)$。 </p>
+<blockquote>
+<p>$f(x)$ $ \approx $ $a_0 + a_1(x-x_0) + a_2(x-x_0)^2 + a_3(x-x_0)^3+ … + a_n(x-x_0)^n$</p>
+</blockquote>
+<p>这个就可以近似的表示 $f(x)$ , 要求 $|f(x) - P_n(x)| = o\lfloor x-x_0 \rfloor ^n$ (关于 $x_0$ 的一个高阶无穷小), 接下来我们来求变量 $a_0,a_1,a_2, … , a_n$ 的表达式.</p>
+<p>假设 $f(x) = P_n(x) $ 的倒数随着 $n$ 的增加一直存成立。</p>
+<p>因为 $$P_n(x) = a_0 + a_1(x-x_0) + a_2(x-x_0)^2 + a_3(x-x_0)^3+ … + a_n(x-x_0)^n$$ , 有</p>
+<p>$$ P_n’(x) = a_1 + 2 <em> a_2(x-x_0) + 3 </em> a_3 <em>(x-x_0)^2 + … + n </em> a_n * (x-x_0)^{(n-1)}$$</p>
+<p>$$ P_n’’(x)= 2<em>a_2 + 3</em>2<em>a_3(x-x_0) + … + n</em>(n-1)<em>a_n</em>(x-x_0)^{(n-2)}$$</p>
+<p> $$ P_n^{(n)}(x) = n!*a_n$$</p>
+<p>可得:</p>
+<p>$$a_0 = f(x_0)$$</p>
+<p>$$a_1 = P_1’(x) = f’(x_0)$$</p>
+<p>$$a_2 = \frac{1}{2} * f’’(x_0)$$</p>
+<p>$$a_n = \frac{1}{n!} * f^n(x_0)$$</p>
+<p>代入原式可得:</p>
+<p>$$P_n(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n \approx f(x)$$</p>
+<p>只要能够证明它的余项式为 $\lfloor x-x_0 \rfloor$  的高阶无穷小量，那么我们就可以证明 $f(x)$ 和 $P_n(x)$ 近似相等。</p>
+<p>以上就是我们的 <strong>泰勒中值定理</strong> 的推论过程, 它的具体定义是:</p>
+<blockquote>
+<p> 函数 $f(x)$ 在开区间 $(a,b)$ 具有 $(n+1)$ 阶导数，则当 $x \in (a,b)$ 时，$f(x)$ 可以表示为一个 $(x-x_0)$ 的一个$n$ 次多项式与余项 $R_n(x)$ 的和。公式表示如下</p>
+<p>$$f(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n + R_n(x)$$</p>
+</blockquote>
+<p>其中 $R_n(x)$ 的值一般为拉格朗日型余项。值为:</p>
+<p>$$R_n(x) = f(x) - P_n(x) = \frac{1}{(n+1)!}f^{(n+1)}(\xi)(x-x_0)^{(n+1)}$$</p>
+<p>所以可得 <strong>泰勒公式</strong></p>
+<p>$$f(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n +\frac{1}{(n+1)!}f^{(n+1)}(\xi)(x-x_0)^{(n+1)}$$</p>
+<p><strong>matlab实践:</strong> </p>
+<p>求函数在$[-4，2]$极值: $ x^3 + 2<em>x^2 - 5</em>x +1$</p>
+<p>首先求该函数的一阶导数: </p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; y =  x^<span class="number">3</span> + <span class="number">2</span>*x^<span class="number">2</span> - <span class="number">5</span>*x +<span class="number">1</span> </div><div class="line">&gt;&gt; dy = diff(y)</div><div class="line"> </div><div class="line">    <span class="number">3</span>*x^<span class="number">2</span> + <span class="number">4</span>*x - <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>再求驻点</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; xz = solve(dy)</div><div class="line">&gt;&gt; xz = double(xz)</div><div class="line">xz =</div><div class="line"></div><div class="line">   <span class="number">-2.1196</span></div><div class="line">    <span class="number">0.7863</span></div></pre></td></tr></table></figure>
+<p>得到两个驻点 $-2.1196$ 和 $0.7863$</p>
+<p>再求二阶导数,判断该驻点对应的值是极大值还是极小值</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; ddy = diff(dy)</div><div class="line">	</div><div class="line">	<span class="number">6</span>*x + <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>代入两驻点得</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; x1 = limit(ddy,x,<span class="number">-2.1196</span>)</div><div class="line">x1 =</div><div class="line"> </div><div class="line">  <span class="number">-10897</span>/<span class="number">1250</span></div><div class="line">&gt;&gt; x2 = limit(ddy,x,<span class="number">0.7863</span>)</div><div class="line">x2 =</div><div class="line"> </div><div class="line">   <span class="number">43589</span>/<span class="number">5000</span></div></pre></td></tr></table></figure>
+<p>可知当$x$趋向于两驻点时，它的二阶导数的值一个为正数，一个为负数。可知在 $x_1$ 点，函数存在极大值点。在 $x_2$ 点，函数存在极小值点。也可以通过画图明显看出结果</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; fplot(<span class="string">'x^3 + 2*x^2 - 5*x + 1'</span>,[<span class="number">-4</span>,<span class="number">2</span>])</div></pre></td></tr></table></figure>
+<p>注意这里的 $fplot$ 函数第一个参数只接受常量表达式.</p>
+<p><img src="/img/math-y.png" alt=""></p>
+<p>也可以用 $fminbnd$ 函数来直接求在区间上的最小值。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;  fminbnd(<span class="string">'x^3 + 2*x^2 -5*x + 1'</span>,<span class="number">-4</span>,<span class="number">2</span>)</div><div class="line"><span class="built_in">ans</span> =</div><div class="line"></div><div class="line">    <span class="number">0.7863</span></div></pre></td></tr></table></figure>
+<p>求最大值只需给函数加个负号即可</p>
+<h3 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h3><h4 id="不定积分"><a href="#不定积分" class="headerlink" title="不定积分"></a>不定积分</h4><p>要了解积分的概念先了解一下<strong>原函数</strong>的概念: </p>
+<blockquote>
+<p>$f(x)$的定义域属于 $I$ ，设 存在 函数 $F(x)$ 也在区间 $I$ 上有意义并且可导。 当 $F’(x) = f(x) $ $x \in I$ 或者 $dF(x) = f(x) dx $  $x \in I$ 成立时，则称 $F(x)$ 为 $f(x)$ 的原函数。</p>
+<p>设 $C$ 为常数，$\because  (F(x) + C)’ = F’(x) = f(x) \therefore F(x) + c $ 也是$f(x)$ 的原函数。</p>
+</blockquote>
+<p>原函数的主要性质: </p>
+<blockquote>
+<ol>
+<li>无穷性。</li>
+<li>相关性(原函数之间的差的导数为一个常数)。</li>
+<li>在某个区间内连续的函数必有原函数，因为初等函数在定义域内时连续的，所以初等函数的原函数有无穷多个。</li>
+</ol>
+</blockquote>
+<p>定义:</p>
+<blockquote>
+<p>函数 $f(x)$ 在某区间的所有原函数的集合称为 $f(x)$ 的不定积分,记作: $\lmoustache f(x)d_x$</p>
+</blockquote>
+<p>不定积分的主要性质:</p>
+<ul>
+<li>不定积分的导数等于原函数. $(\lmoustache f(x)d_x)’ = f(x)$</li>
+<li>不定积分的微分等于被积表达式. $\lmoustache f’(x) d_x = f(x) + C $ 或者 $\lmoustache df(x) = f(x) + C$</li>
+</ul>
+<p>不定积分的表达式: $\lmoustache f(x)dx = F(x) + C$</p>
+<h4 id="定积分"><a href="#定积分" class="headerlink" title="定积分"></a>定积分</h4><p>定义:</p>
+<blockquote>
+<p>函数 $f(x)$ 在区间 $[a,b]$ 上是有界函数，在其上取 $n-1$ 个分点，使得 $a = x_0 &lt; x_1 &lt; x_2 &lt; …. &lt; x_n = b$，把区间 $[a,b]$ 划分成 $n$ 个小区间 $[x_0,x_1],[x_1,x_2],[x_3,x<em>4],[x</em>{i -1},x<em>i],[x</em>{n-1},x_n]$, 各个小区间的长度为$\vartriangle x = x<em>i - x </em>{i-1}$ $ x=(1,2,…,n)$, 在每个小区间 $[x_{i-1},x_i]$ 上任取一点 $\xi<em>i$ , 作和式 $\sum</em>{i=1}^{n}f(\xi_i)\vartriangle x_i$, 记 $\vartriangle x = max{\vartriangle x_1,\vartriangle x_2, \vartriangle x_3 … \vartriangle x_n}$ 。无论区间 $[a,b]$ 怎样划分，也不管 $\xi<em>i$ 怎样的取获取，当  $\vartriangle x \to 0 $ 时，极限 $lim </em>{\vartriangle x \to 0} \sum_{i=1}^n f(\xi_i)\vartriangle x_i$ 存在且为值 $I$ , 则称 $I$ 为函数 $f(x)$ 在区间 $[a,b]$ 上的定积分,简称为积分，记作: $\lmoustache _a^b f(x) dx$  </p>
+</blockquote>
+<p>定积分的函数表达式: </p>
+<p>$\lmoustache <em>a ^b f(x)dx = lim </em>{\vartriangle x \to 0} \sum_{i=1}^n f(\xi_i)\vartriangle x_i = F(b) - F(a)$</p>
+<p>这也就是 牛顿-布莱尼茨公式 .</p>
+<p><strong>matlab实践</strong></p>
+<p>matlab种对积分求不定积分表达式和定积分对的积分值用的都是int方法，下面来看一下对 $y = sin(x)$ 的不定积分和在 $(0,\frac{\pi}{2})$ 的积分值怎么求:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; y = <span class="built_in">sin</span>(x)</div><div class="line"> </div><div class="line">y =</div><div class="line"> </div><div class="line"><span class="built_in">sin</span>(x)</div><div class="line"> </div><div class="line">&gt;&gt; int(y)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line">-<span class="built_in">cos</span>(x)</div><div class="line">&gt;&gt; int(y,x,<span class="number">0</span>,<span class="built_in">pi</span>/<span class="number">2</span>)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<p> 求解微分方程:</p>
+<p>matlab 中用 $dsolve$ 方法来求解微分方程的通解和特解。其中表示y的 $k$ 阶导数用 $Dky$ 来表示。例如: </p>
+<p>求 ，$(1+x^2)<em>y’’ = 2</em>x*y’$ 当 $y(0) = 1$  $y’(0) = 3$  的特解:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; eqn=<span class="string">'(1+x^2)*D2y = 2*x*Dy'</span></div><div class="line"></div><div class="line">eqn =</div><div class="line"></div><div class="line">    <span class="string">'(1+x^2)*D2y = 2*x*Dy'</span></div><div class="line"></div><div class="line">&gt;&gt; dsolve(eqn,<span class="string">'y(0)=1,Dy(0)=3'</span>,<span class="string">'x'</span>)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line">x*(x^<span class="number">2</span> + <span class="number">3</span>) + <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>$dsolve$ 方法的第二个参数为方程的初始条件，若是求通解，就不需要加上这个参数了。$x$ 是表示对 $x$ 求微分。默认是对 $t$ 求微分</p>
+<h3 id="好想法-习题解析"><a href="#好想法-习题解析" class="headerlink" title="好想法(习题解析)"></a>好想法(习题解析)</h3><p>$question1: $ 有隐式函数 $( w(x) + 1 )* exp(w(x)) = x$ , 当 $x = 1$  时，$w(x) = 0$ .求 $w(3/2)$ 的近似值.</p>
+<p>$answer:$ 这个题目需要用到线性逼近的思路来做，因为所求的点为 3/2，可以近似的认为 $w(\frac{3}{2})$ 和 $w(1)$ 的值在一条直线上。所以根据 $n=1$ 项的泰勒展开式可得在 $x=1$ 时，该线性函数方程式为 $w(x) \approx w(1) + w’(1)(x-1) $ .现在只需求得 $w’(1)$ 的值即可。这个对两边求导化简即可。</p>
 
             
             <p class="more">
@@ -430,6 +515,11 @@
     </li>
     
     <li>
+        <a href="/categories/计算机网络/">计算机网络</a>
+        <span class="badge">(1)</span>
+    </li>
+    
+    <li>
         <a href="/categories/健康生活/">健康生活</a>
         <span class="badge">(1)</span>
     </li>
@@ -453,6 +543,10 @@
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
+    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
+  
+    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
+  
     <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
   
     <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
@@ -465,19 +559,17 @@
   
     <a class="tag-item" href="/tags/数理统计/" title="数理统计">数理统计 (1)</a>
   
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+  
+    <a class="tag-item" href="/tags/网络协议栈/" title="网络协议栈">网络协议栈 (1)</a>
+  
     <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
-  
-    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
-  
-    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
     <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
-  
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
   
 </div>
     </section>

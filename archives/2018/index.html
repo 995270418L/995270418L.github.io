@@ -120,6 +120,195 @@
     <header>
         <!-- 标签这有且只能显示一个 -->
         
+        <a class="cat-link" href="/categories/计算机网络/">计算机网络</a>
+        
+        <!-- 文章标题 -->
+        
+    <h3 class="post-title">
+    	<a href="https://995270418l.github.io/2018/05/04/net2/">
+    		OSI模型和TCP/IP模型
+    	</a>
+    </h3>
+
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-05-03T16:00:00.000Z">2018-05-04</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/网络协议栈/" title="网络协议栈">网络协议栈</a>
+    
+
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <h2 id="协议栈"><a href="#协议栈" class="headerlink" title="协议栈"></a>协议栈</h2><p>​       协议栈是一整套完整的网络协议层次，它们一起协同工作，提供网络互联能。它被成为栈，是因为它一般被设计为等级层次结构，每一层都能支持上层通讯使用下层通讯。</p>
+<p>​        层次的数量因模型的不同而不同，TCP/IP 模型有5层（应用层，传输层，网络层，数据链路层和物理层）。OSI模型有7层（应用层，表示层，会话层，传输层，网络层，数据链路层和物理层）。</p>
+<p>​        两个设备间想正常的通讯必须拥有相同的协议栈，这样不同的操作系统之间的电脑才能够正常的通讯。</p>
+<h2 id="OSI模型"><a href="#OSI模型" class="headerlink" title="OSI模型"></a>OSI模型</h2><h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><pre><code>定义数据传输协议，例如文件传输用的是FTP还是HTTP
+</code></pre><h4 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h4><pre><code>将应用层传输的数据转化成下层能理解的标准格式，同样的，表示层将接受自会话层的数据转换成应用层能理解的格式。
+</code></pre><h4 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h4><p>​    一旦资料被转换成正确的格式，发送端主机必须与接收端主机建立一个会话。它主要负责建立、维持和终止与远端主机的会话。会话通常在应用程序间建立。属于软件层面的应用。</p>
+<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>​    传输层负责维持流控制。例如：windows操作系统上各个应用程序和自身都需要进行网络通讯，传输层提取来自不同程序的数据，并把他们整合为一个单独的数据流。</p>
+<p>​    传输层也负责错误检查和在必要时进行数据恢复。实质上，传输层确保所有的数据能从传输端主机发送到接收端主机。</p>
+<h4 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h4><p>​    网络层决定数据如何到达接收者。它处理像寻址、路由和逻辑协议之类的工作。网络层在资源与目的主机之间创造<strong>逻辑路径</strong>，也叫<strong>虚电路</strong>，虚电路为每个数据包提供一条通往目的地的通道。网络层也负责它自己的错误处理，以及数据包的排序和拥塞控制。</p>
+<p>​    数据包的排序是非常重要的，因为许多协议限制了最大数据包的大小，当一个数据过大时，会将数据拆分成多个数据包，这时，网络层就会为每个数据包分配一个序列号。当接收端的网络层接收到数据时，就会检查数据包序列号，并重新组装数据，并检查是否有数据包遗失。</p>
+<h4 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h4><p>​    数据链路层可以进一步分为两层，介质访问控制层（MAC）和逻辑链路控制层（LLC），MAC层通过它的MAC地址建立计算机在网络上的身份，MAC地址是硬件给网络适配器分配的地址，它是最终发送和接受数据包时使用的地址。LLC层控制帧同步，并提供一定程度上的错误检查机制。</p>
+<h4 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h4><p>​    物理层是硬件上的规范，定义了什么是用于传输和接收数据的（硬件设备）。</p>
+<h3 id="OSI模型的工作原理"><a href="#OSI模型的工作原理" class="headerlink" title="OSI模型的工作原理"></a>OSI模型的工作原理</h3><p>​    数据从主机发送到接收端时，首先从应用层到物理层流动，这时候数据每流经一层都会附带对应层次的协议头，协议头是附加在数据开头处的一段信息，除了物理层不会。接收端接受的数据是自下而上流动的，从物理层到应用层，每一层都会读取对应协议头的信息，用来决定接收端每一层该如何处理接收的信息。读取完之后会去除掉对应层次的协议头信息。</p>
+<p>​    这些协议头根据它们收到的协议头的层次不同而包含不同的信息，但是，都能够告诉对等层许多重要的信息，包括数据包大小，帧和数据报。</p>
+<p>​    每一层的协议头和数据被称为数据包。虽然看起来有点混乱，但每一层给它的服务数据单元都有不同的名字，以下是OSI模型每一层的服务数据单元的通用名称。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">层次</th>
+<th style="text-align:center">封装单元</th>
+<th>设备</th>
+<th style="text-align:center">关键词/描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">数据</td>
+<td>PC</td>
+<td style="text-align:center">为应用程序提供网洛服务</td>
+</tr>
+<tr>
+<td style="text-align:center">表示层</td>
+<td style="text-align:center">数据</td>
+<td></td>
+<td style="text-align:center">为应用层提供标准化的接口</td>
+</tr>
+<tr>
+<td style="text-align:center">会话层</td>
+<td style="text-align:center">数据</td>
+<td></td>
+<td style="text-align:center">主机之间的通讯</td>
+</tr>
+<tr>
+<td style="text-align:center">传输层</td>
+<td style="text-align:center">报文段</td>
+<td></td>
+<td style="text-align:center">提供端到端的消息传递和数据恢复（可靠性）。按合适的顺序分隔/组传数据。</td>
+</tr>
+<tr>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">数据包</td>
+<td>路由器</td>
+<td style="text-align:center">逻辑选址和路由选择、路由、报告传输错误。</td>
+</tr>
+<tr>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">帧</td>
+<td>网桥、交换机、NIC</td>
+<td style="text-align:center">物理地址和介质访问。</td>
+</tr>
+<tr>
+<td style="text-align:center">物理层</td>
+<td style="text-align:center">位</td>
+<td>中继器、集线器、收发器</td>
+<td style="text-align:center">二进制信号传输和编码</td>
+</tr>
+</tbody>
+</table>
+<h2 id="TCP-IP模型"><a href="#TCP-IP模型" class="headerlink" title="TCP/IP模型"></a>TCP/IP模型</h2><h4 id="应用层-1"><a href="#应用层-1" class="headerlink" title="应用层"></a>应用层</h4><p>​    是OSI参考模型中的应用层、展示层、会话层三者综合体。它定义了TCP/IP应用协议与传输层服务交互的主机应用程序接口如何使用网络。</p>
+<p>​    应用层包含所有高级协议: DNS，HTTP，Telnet，FTP，SNMP（简单网络管理协议），SMTP，DHCP（动态主机配置协议）,RDP（远程桌面连接协议）。</p>
+<h4 id="传输层-1"><a href="#传输层-1" class="headerlink" title="传输层"></a>传输层</h4><p>​    和OSI模型中的传输层功能对应，有错误重传和错误诊断功能，充当应用层的传输服务，使用的是TCP或者UDP协议。一个是基于连接的，一个是基于性能的。</p>
+<h4 id="互联网层"><a href="#互联网层" class="headerlink" title="互联网层"></a>互联网层</h4><p>​    和OSI的网络层对应，他们的目的是将数据包通过独立的路径选择传输到目的地。</p>
+<p>​    数据的路由和传输时互联网层的主要作用，也是这个体系的关键元素。这一层的主要协议有：IP（网络互连协议），ICMP（互联网控制消息协议），ARP（地址解析协议），RARP（逆地址解析协议）和IGMP（互联网组管理协议）。</p>
+<h4 id="网络接口层"><a href="#网络接口层" class="headerlink" title="网络接口层"></a>网络接口层</h4><p>​    定义了数据传输的物理细节，和OSI的数据链路层和物理层功能类似。它主要包含的协议有：以太网、令牌环网、FDDI、X.25、帧中继等。</p>
+<h2 id="TCP-IP模型和OSI模型主要区别"><a href="#TCP-IP模型和OSI模型主要区别" class="headerlink" title="TCP/IP模型和OSI模型主要区别"></a>TCP/IP模型和OSI模型主要区别</h2><ul>
+<li><p>OSI模型是参考实现，TCP/IP是OSI模型的具体实现</p>
+</li>
+<li><p>TCP/IP协议被认为是互联网发展的标准，而OSI模型则是一个通用的独立于具体协议的标准。</p>
+</li>
+<li><p>TCP/IP由四个等级层次组成，OSI有7层。</p>
+</li>
+</ul>
+
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/05/04/net2/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/05/04/net2/" title="OSI模型和TCP/IP模型">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/4.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
+            <a href="javascript: void(0);" class="cat">未分类</a>
+        
+        <!-- 文章标题 -->
+        
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-05-03T11:55:04.500Z">2018-05-03</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <p>title: 导论<br>author: steve<br>date: 2018-05-03<br>tags: </p>
+<ul>
+<li><p>category:</p>
+</li>
+<li><p>计算机网络</p>
+</li>
+</ul>
+<h3 id="往返时间"><a href="#往返时间" class="headerlink" title="往返时间"></a>往返时间</h3><p>​       在TCP协议中，当一个主机向服务器发送报文段(数据包)时，它就会启动一个计时器。如果计时器在主机接收到报文段确认数据之前发生超时，则主机会重新发送请求给服务器。从计时器开始计时到过期的时间称作计时器<strong>超时时间</strong>。超时时间包括往返时间和处理时间，其中主要是往返时间。</p>
+<p>​      往返时间的计算(平均偏差算法)：</p>
+<p>用SampleRTT表示报文段发送出去的时刻到报文段确认的时刻。每个报文段都有与其对应的SampleRTT，显然每个报文段的SampleRTT是不同的。TCP维护了一个SampleRTT的平均值，叫EstimatedRTT。一旦接收到报文段确认并得到SampleRTT，EstimatedRTT的值就会更新。更新公式为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EstimatedRTT = (<span class="number">1</span> - a) * EstimatedRTT + aSampleRTT</div></pre></td></tr></table></figure>
+<p>一般取 a = 0.1，则公式变为如下形式：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EstimatedRTT = <span class="number">0.9</span>*EstimatedRTT + <span class="number">0.1</span>*SampleRTT</div></pre></td></tr></table></figure>
+<h3 id="串行延迟"><a href="#串行延迟" class="headerlink" title="串行延迟"></a>串行延迟</h3><p>​       串行是指储存在计算机中的数据字节转换成串行的比特流，从而在通信介质上进行传输。串行延迟也被称为传输延迟或延迟。串行所消耗的时间可以用如下公式计算得出：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">串行延迟 = 数据包大小(比特) / 传输速率(比特每秒)</div></pre></td></tr></table></figure>
+<h3 id="吞吐量和带宽"><a href="#吞吐量和带宽" class="headerlink" title="吞吐量和带宽"></a>吞吐量和带宽</h3><p>​        带宽是给定时间周期内能通过网络传输的最大数据量，而吞吐量是给定时间周期内能通过网络传输的实际数据量。</p>
+
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/05/03/net1/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/05/03/net1/" title="">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/3.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
         <a class="cat-link" href="/categories/机器学习/">机器学习</a>
         
         <!-- 文章标题 -->
@@ -167,7 +356,7 @@
 <li>$$f(a) = f(b)$$</li>
 </ol>
 <p>结论: <strong>在$$(a,b)$$上存在一点$$\epsilon$$，使得 $$f’(\epsilon) = 0$$ </strong></p>
-<h3 id="拉格朗日中值定理"><a href="#拉格朗日中值定理" class="headerlink" title="拉格朗日中值定理"></a>拉格朗日中值定理</h3><p>成立条件:</p>
+<h3 id="拉格朗日微分中值定理"><a href="#拉格朗日微分中值定理" class="headerlink" title="拉格朗日微分中值定理"></a>拉格朗日微分中值定理</h3><p>成立条件:</p>
 <ol>
 <li>$$f(x)$$在区间 [a,b] 上是连续的</li>
 <li>$$f(x)$$在区间(a,b)上是可导的</li>
@@ -181,6 +370,91 @@
 <li>对任意 $$x  (a,b), g(x) \ne 0$$</li>
 </ol>
 <p>结论: <strong>在开区间$$(a,b)$$上存在一点$$\epsilon$$ 使得$$\frac{f(b)-f(a)}{g(b)-g(a)} = \frac{f’(\epsilon)}{g’(\epsilon)}$$成立</strong></p>
+<h3 id="泰勒定理"><a href="#泰勒定理" class="headerlink" title="泰勒定理"></a>泰勒定理</h3><p>泰勒定理主要是用来对在区间求具体变量 $(x_0)$ 的函数值时将其等价于求在该区间内 $(x-x_0)$ 的 $n$ 项多项式之和 $P_n(x)$。 </p>
+<blockquote>
+<p>$f(x)$ $ \approx $ $a_0 + a_1(x-x_0) + a_2(x-x_0)^2 + a_3(x-x_0)^3+ … + a_n(x-x_0)^n$</p>
+</blockquote>
+<p>这个就可以近似的表示 $f(x)$ , 要求 $|f(x) - P_n(x)| = o\lfloor x-x_0 \rfloor ^n$ (关于 $x_0$ 的一个高阶无穷小), 接下来我们来求变量 $a_0,a_1,a_2, … , a_n$ 的表达式.</p>
+<p>假设 $f(x) = P_n(x) $ 的倒数随着 $n$ 的增加一直存成立。</p>
+<p>因为 $$P_n(x) = a_0 + a_1(x-x_0) + a_2(x-x_0)^2 + a_3(x-x_0)^3+ … + a_n(x-x_0)^n$$ , 有</p>
+<p>$$ P_n’(x) = a_1 + 2 <em> a_2(x-x_0) + 3 </em> a_3 <em>(x-x_0)^2 + … + n </em> a_n * (x-x_0)^{(n-1)}$$</p>
+<p>$$ P_n’’(x)= 2<em>a_2 + 3</em>2<em>a_3(x-x_0) + … + n</em>(n-1)<em>a_n</em>(x-x_0)^{(n-2)}$$</p>
+<p> $$ P_n^{(n)}(x) = n!*a_n$$</p>
+<p>可得:</p>
+<p>$$a_0 = f(x_0)$$</p>
+<p>$$a_1 = P_1’(x) = f’(x_0)$$</p>
+<p>$$a_2 = \frac{1}{2} * f’’(x_0)$$</p>
+<p>$$a_n = \frac{1}{n!} * f^n(x_0)$$</p>
+<p>代入原式可得:</p>
+<p>$$P_n(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n \approx f(x)$$</p>
+<p>只要能够证明它的余项式为 $\lfloor x-x_0 \rfloor$  的高阶无穷小量，那么我们就可以证明 $f(x)$ 和 $P_n(x)$ 近似相等。</p>
+<p>以上就是我们的 <strong>泰勒中值定理</strong> 的推论过程, 它的具体定义是:</p>
+<blockquote>
+<p> 函数 $f(x)$ 在开区间 $(a,b)$ 具有 $(n+1)$ 阶导数，则当 $x \in (a,b)$ 时，$f(x)$ 可以表示为一个 $(x-x_0)$ 的一个$n$ 次多项式与余项 $R_n(x)$ 的和。公式表示如下</p>
+<p>$$f(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n + R_n(x)$$</p>
+</blockquote>
+<p>其中 $R_n(x)$ 的值一般为拉格朗日型余项。值为:</p>
+<p>$$R_n(x) = f(x) - P_n(x) = \frac{1}{(n+1)!}f^{(n+1)}(\xi)(x-x_0)^{(n+1)}$$</p>
+<p>所以可得 <strong>泰勒公式</strong></p>
+<p>$$f(x) = f(x_0) + f’(x_0)<em>(x-x_0) + \frac{1}{2!}f’’(x_0)</em>(x-x_0)^2 + … +\frac{1}{n!} f^n(x_0)*(x-x_0)^n +\frac{1}{(n+1)!}f^{(n+1)}(\xi)(x-x_0)^{(n+1)}$$</p>
+<p><strong>matlab实践:</strong> </p>
+<p>求函数在$[-4，2]$极值: $ x^3 + 2<em>x^2 - 5</em>x +1$</p>
+<p>首先求该函数的一阶导数: </p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; y =  x^<span class="number">3</span> + <span class="number">2</span>*x^<span class="number">2</span> - <span class="number">5</span>*x +<span class="number">1</span> </div><div class="line">&gt;&gt; dy = diff(y)</div><div class="line"> </div><div class="line">    <span class="number">3</span>*x^<span class="number">2</span> + <span class="number">4</span>*x - <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>再求驻点</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; xz = solve(dy)</div><div class="line">&gt;&gt; xz = double(xz)</div><div class="line">xz =</div><div class="line"></div><div class="line">   <span class="number">-2.1196</span></div><div class="line">    <span class="number">0.7863</span></div></pre></td></tr></table></figure>
+<p>得到两个驻点 $-2.1196$ 和 $0.7863$</p>
+<p>再求二阶导数,判断该驻点对应的值是极大值还是极小值</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; ddy = diff(dy)</div><div class="line">	</div><div class="line">	<span class="number">6</span>*x + <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>代入两驻点得</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; x1 = limit(ddy,x,<span class="number">-2.1196</span>)</div><div class="line">x1 =</div><div class="line"> </div><div class="line">  <span class="number">-10897</span>/<span class="number">1250</span></div><div class="line">&gt;&gt; x2 = limit(ddy,x,<span class="number">0.7863</span>)</div><div class="line">x2 =</div><div class="line"> </div><div class="line">   <span class="number">43589</span>/<span class="number">5000</span></div></pre></td></tr></table></figure>
+<p>可知当$x$趋向于两驻点时，它的二阶导数的值一个为正数，一个为负数。可知在 $x_1$ 点，函数存在极大值点。在 $x_2$ 点，函数存在极小值点。也可以通过画图明显看出结果</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; fplot(<span class="string">'x^3 + 2*x^2 - 5*x + 1'</span>,[<span class="number">-4</span>,<span class="number">2</span>])</div></pre></td></tr></table></figure>
+<p>注意这里的 $fplot$ 函数第一个参数只接受常量表达式.</p>
+<p><img src="/img/math-y.png" alt=""></p>
+<p>也可以用 $fminbnd$ 函数来直接求在区间上的最小值。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;  fminbnd(<span class="string">'x^3 + 2*x^2 -5*x + 1'</span>,<span class="number">-4</span>,<span class="number">2</span>)</div><div class="line"><span class="built_in">ans</span> =</div><div class="line"></div><div class="line">    <span class="number">0.7863</span></div></pre></td></tr></table></figure>
+<p>求最大值只需给函数加个负号即可</p>
+<h3 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h3><h4 id="不定积分"><a href="#不定积分" class="headerlink" title="不定积分"></a>不定积分</h4><p>要了解积分的概念先了解一下<strong>原函数</strong>的概念: </p>
+<blockquote>
+<p>$f(x)$的定义域属于 $I$ ，设 存在 函数 $F(x)$ 也在区间 $I$ 上有意义并且可导。 当 $F’(x) = f(x) $ $x \in I$ 或者 $dF(x) = f(x) dx $  $x \in I$ 成立时，则称 $F(x)$ 为 $f(x)$ 的原函数。</p>
+<p>设 $C$ 为常数，$\because  (F(x) + C)’ = F’(x) = f(x) \therefore F(x) + c $ 也是$f(x)$ 的原函数。</p>
+</blockquote>
+<p>原函数的主要性质: </p>
+<blockquote>
+<ol>
+<li>无穷性。</li>
+<li>相关性(原函数之间的差的导数为一个常数)。</li>
+<li>在某个区间内连续的函数必有原函数，因为初等函数在定义域内时连续的，所以初等函数的原函数有无穷多个。</li>
+</ol>
+</blockquote>
+<p>定义:</p>
+<blockquote>
+<p>函数 $f(x)$ 在某区间的所有原函数的集合称为 $f(x)$ 的不定积分,记作: $\lmoustache f(x)d_x$</p>
+</blockquote>
+<p>不定积分的主要性质:</p>
+<ul>
+<li>不定积分的导数等于原函数. $(\lmoustache f(x)d_x)’ = f(x)$</li>
+<li>不定积分的微分等于被积表达式. $\lmoustache f’(x) d_x = f(x) + C $ 或者 $\lmoustache df(x) = f(x) + C$</li>
+</ul>
+<p>不定积分的表达式: $\lmoustache f(x)dx = F(x) + C$</p>
+<h4 id="定积分"><a href="#定积分" class="headerlink" title="定积分"></a>定积分</h4><p>定义:</p>
+<blockquote>
+<p>函数 $f(x)$ 在区间 $[a,b]$ 上是有界函数，在其上取 $n-1$ 个分点，使得 $a = x_0 &lt; x_1 &lt; x_2 &lt; …. &lt; x_n = b$，把区间 $[a,b]$ 划分成 $n$ 个小区间 $[x_0,x_1],[x_1,x_2],[x_3,x<em>4],[x</em>{i -1},x<em>i],[x</em>{n-1},x_n]$, 各个小区间的长度为$\vartriangle x = x<em>i - x </em>{i-1}$ $ x=(1,2,…,n)$, 在每个小区间 $[x_{i-1},x_i]$ 上任取一点 $\xi<em>i$ , 作和式 $\sum</em>{i=1}^{n}f(\xi_i)\vartriangle x_i$, 记 $\vartriangle x = max{\vartriangle x_1,\vartriangle x_2, \vartriangle x_3 … \vartriangle x_n}$ 。无论区间 $[a,b]$ 怎样划分，也不管 $\xi<em>i$ 怎样的取获取，当  $\vartriangle x \to 0 $ 时，极限 $lim </em>{\vartriangle x \to 0} \sum_{i=1}^n f(\xi_i)\vartriangle x_i$ 存在且为值 $I$ , 则称 $I$ 为函数 $f(x)$ 在区间 $[a,b]$ 上的定积分,简称为积分，记作: $\lmoustache _a^b f(x) dx$  </p>
+</blockquote>
+<p>定积分的函数表达式: </p>
+<p>$\lmoustache <em>a ^b f(x)dx = lim </em>{\vartriangle x \to 0} \sum_{i=1}^n f(\xi_i)\vartriangle x_i = F(b) - F(a)$</p>
+<p>这也就是 牛顿-布莱尼茨公式 .</p>
+<p><strong>matlab实践</strong></p>
+<p>matlab种对积分求不定积分表达式和定积分对的积分值用的都是int方法，下面来看一下对 $y = sin(x)$ 的不定积分和在 $(0,\frac{\pi}{2})$ 的积分值怎么求:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; y = <span class="built_in">sin</span>(x)</div><div class="line"> </div><div class="line">y =</div><div class="line"> </div><div class="line"><span class="built_in">sin</span>(x)</div><div class="line"> </div><div class="line">&gt;&gt; int(y)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line">-<span class="built_in">cos</span>(x)</div><div class="line">&gt;&gt; int(y,x,<span class="number">0</span>,<span class="built_in">pi</span>/<span class="number">2</span>)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<p> 求解微分方程:</p>
+<p>matlab 中用 $dsolve$ 方法来求解微分方程的通解和特解。其中表示y的 $k$ 阶导数用 $Dky$ 来表示。例如: </p>
+<p>求 ，$(1+x^2)<em>y’’ = 2</em>x*y’$ 当 $y(0) = 1$  $y’(0) = 3$  的特解:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; syms x</div><div class="line">&gt;&gt; eqn=<span class="string">'(1+x^2)*D2y = 2*x*Dy'</span></div><div class="line"></div><div class="line">eqn =</div><div class="line"></div><div class="line">    <span class="string">'(1+x^2)*D2y = 2*x*Dy'</span></div><div class="line"></div><div class="line">&gt;&gt; dsolve(eqn,<span class="string">'y(0)=1,Dy(0)=3'</span>,<span class="string">'x'</span>)</div><div class="line"> </div><div class="line"><span class="built_in">ans</span> =</div><div class="line"> </div><div class="line">x*(x^<span class="number">2</span> + <span class="number">3</span>) + <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>$dsolve$ 方法的第二个参数为方程的初始条件，若是求通解，就不需要加上这个参数了。$x$ 是表示对 $x$ 求微分。默认是对 $t$ 求微分</p>
+<h3 id="好想法-习题解析"><a href="#好想法-习题解析" class="headerlink" title="好想法(习题解析)"></a>好想法(习题解析)</h3><p>$question1: $ 有隐式函数 $( w(x) + 1 )* exp(w(x)) = x$ , 当 $x = 1$  时，$w(x) = 0$ .求 $w(3/2)$ 的近似值.</p>
+<p>$answer:$ 这个题目需要用到线性逼近的思路来做，因为所求的点为 3/2，可以近似的认为 $w(\frac{3}{2})$ 和 $w(1)$ 的值在一条直线上。所以根据 $n=1$ 项的泰勒展开式可得在 $x=1$ 时，该线性函数方程式为 $w(x) \approx w(1) + w’(1)(x-1) $ .现在只需求得 $w’(1)$ 的值即可。这个对两边求导化简即可。</p>
 
             
             <p class="more">
@@ -1036,6 +1310,11 @@ logger.info(b == c.intern()); // 3
     </li>
     
     <li>
+        <a href="/categories/计算机网络/">计算机网络</a>
+        <span class="badge">(1)</span>
+    </li>
+    
+    <li>
         <a href="/categories/健康生活/">健康生活</a>
         <span class="badge">(1)</span>
     </li>
@@ -1059,6 +1338,10 @@ logger.info(b == c.intern()); // 3
         <!-- 文章标签 -->
 <div class="widget-bd tag-wrap">
   
+    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
+  
+    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
+  
     <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
   
     <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
@@ -1071,19 +1354,17 @@ logger.info(b == c.intern()); // 3
   
     <a class="tag-item" href="/tags/数理统计/" title="数理统计">数理统计 (1)</a>
   
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+  
+    <a class="tag-item" href="/tags/网络协议栈/" title="网络协议栈">网络协议栈 (1)</a>
+  
     <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
-  
-    <a class="tag-item" href="/tags/spring-security/" title="spring security">spring security (1)</a>
-  
-    <a class="tag-item" href="/tags/spring-Oauth2/" title="spring Oauth2">spring Oauth2 (1)</a>
   
     <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
-  
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
   
 </div>
     </section>
