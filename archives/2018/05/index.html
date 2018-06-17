@@ -125,6 +125,166 @@
         <!-- 文章标题 -->
         
     <h3 class="post-title">
+    	<a href="https://995270418l.github.io/2018/05/06/net4/">
+    		TCP与UDP
+    	</a>
+    </h3>
+
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-05-05T16:00:00.000Z">2018-05-06</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/TCP-IP协议/" title="TCP/IP协议">TCP/IP协议</a>
+    
+
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <h3 id="进程与进程通信"><a href="#进程与进程通信" class="headerlink" title="进程与进程通信"></a>进程与进程通信</h3><p>在数据链路层，数据之间通过点对点的方式进行传输（局域网）。在网络层，数据通过主机对主机方式进行通信，IP数据包的发送与接收。在传输层，进程或应用程序通过端口进行通信，也叫<strong>进程与进程之间的通信</strong>，TCP与UDP协议就是在这一层次工作的。</p>
+<h3 id="端口和套接字"><a href="#端口和套接字" class="headerlink" title="端口和套接字"></a>端口和套接字</h3><p>端口是标识指定应用程序的一种方式，用16位的bit表示，共有 <strong>2^16-1=65535</strong> 个端口总数。端口分为已定义端口和临时端口</p>
+<ol>
+<li>已定义端口：<ul>
+<li>小于255的端口是为公共应用保留的</li>
+<li>255~1023之间的端口被分配给一些公司的市场应用</li>
+<li>大于1023的端口未定义。</li>
+</ul>
+</li>
+<li>临时端口<ul>
+<li>客户端与服务器连接的时候，主要客户端需要，运行客户端进程的主机就会给客户端临时分配一个临时端口。<br>套接字(socket)是我们在网络中可以命名和寻址的通信连接点（端点）。通常情况下，一台主机采用典型的系统配置作为服务器，其它主机作为客户端。客户端连接服务器，并与之交换信息，最后断开连接，相当于螺帽一样的存在。</li>
+</ul>
+</li>
+<li>套接字连接类型<ul>
+<li>面向连接（TCP）7</li>
+<li>无连接（UDP）</li>
+</ul>
+</li>
+</ol>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><ol>
+<li>UDP 工作流程：<ul>
+<li>将上层数据封装，填充上UDP头部，发送给下层协议(IP协议)，</li>
+</ul>
+</li>
+<li>UDP不做什么：<ul>
+<li>发送数据前建立连接</li>
+<li>检测数据的丢失并重传</li>
+<li>保证接受数据的顺序与发送数据的顺序一致</li>
+<li>提供拥塞处理机制，以及两个应用之间的流控制机制</li>
+</ul>
+</li>
+<li>UDP消息格式<br>UDP数据报分为两个部分：UDP头部和UDP数据区域。头部数据的组成如下：<ul>
+<li>源端口号：16位，表明发送UDP数据的源进程的端口</li>
+<li>目标端口号： 16位，表明接收UDP协议的目标进程的端口</li>
+<li>长度：16位，表明用户数据报的长度，以字节计。包括头部长度。</li>
+<li>校检和：一个可选的16位字段，是伪IP头部，UDP头部，UDP数据的反码和(异或运算)。<br>数据区域： 长度可变，被封装在上层消息中被发送出去。</li>
+</ul>
+</li>
+</ol>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><ol>
+<li>TCP连接的建立(三次握手)<br>这里的客户端个服务端的概念是相对的。客户端有可能是服务端，服务端也有可能是客户端。<br>TCP的建立是通过元数据SYN+ACK来确认连接信息的。 SYN元数据用于标识报文，以方便将报文重组。ACK元数据表示的是一个“确认回复”消息。值和接收到的syn值有关，一般是+1的关系。为了简单，我们将SYN报文的序列号称作SEQ<ol>
+<li>客户端发送SEQ=J,ACK=0给服务端请求建立连接，如果超过一定时间没收到服务端的响应(计时器超时)，会重新发送请求。</li>
+<li>服务端收到请求，回复SEQ=K(k是随机值)，ACK=J+1表示接收到请求，同意建立连接。</li>
+<li>客户端发送 SEQ=J+1,ACK=K+1,确认号ACK=K+1表示客户端已经接收到服务端的响应，开始建立连接</li>
+</ol>
+</li>
+<li>TCP连接的四次挥手<br>TCP建立一次连接需要三次握手，而结束一个连接却需要四次，这是因为TCP的半关闭状态决定的(一端处于开启状态，一端处于关闭状态)。由于TCP是全双工通信，所以两端都要关闭才能算是关闭。<ol>
+<li>客户端首先调用关闭，发送FIN码给服务端，假设这里的FIN 值为M.</li>
+<li>服务端接收到带有FIN码的请求，执行被动关闭，并回复确认信息给客户端，此时ACK的值为M+1.同时传输给用户一个结束文件，这是因为接收到FIN码意味着服务端不再向客户端发送文件。</li>
+<li>服务端会请求客户端进行关闭连接，发送FIN码的请求，这里假设值为N。同时会开启一个计时器，若超时，没收到客户端发送的确认信息，会自动关闭连接</li>
+<li>客户端同意服务端的关闭确认，回复ACK=N+1给服务端同意连接关闭。<br>当客户端发送的FIN码，服务端没收到，会引发客户端重传，当经过N次重传失败的时候，客户端就会放弃重传，关闭连接。但当发送者关闭连接，服务端并不知道，所以服务端会处于完全活动状态，这就导致了半关闭状态。为了避免这种问题，一种解决方案是，当服务端在指定的时间没接收到客户端发送的数据，就自动单方面关闭连接。那么这个半关闭状态问题就解决了。</li>
+</ol>
+</li>
+<li>TCP头部数据格式</li>
+</ol>
+<p>| 00~15 | 16~31|<br>| :—–: | :—–: | :—–：| | :—–: | :——: | :——–: | :—: | :—-: |<br>| 源端口号 | 目的端口号|<br>| 序号 |<br>| 确认号 |<br>| 4位头部长度 | 6位保留 | URG | ACK | PSH | RST | SYN | 窗口大小 |<br>| 校检和 | 紧急指针 |<br>| 选项 |<br>| 数据 |</p>
+
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/05/06/net4/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/05/06/net4/" title="TCP与UDP">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/6.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
+        <a class="cat-link" href="/categories/计算机网络/">计算机网络</a>
+        
+        <!-- 文章标题 -->
+        
+    <h3 class="post-title">
+    	<a href="https://995270418l.github.io/2018/05/06/net3/">
+    		LAN技术
+    	</a>
+    </h3>
+
+    </header>
+    <p class="post-meta">
+        steve 发表于
+        <time datetime="2018-05-05T16:00:00.000Z">2018-05-06</time>
+        &nbsp;&nbsp;
+        <span class="post-tags">
+            标签：
+            
+    
+        <a href="/tags/网络协议栈/" title="网络协议栈">网络协议栈</a>
+    
+
+        </span>
+    </p>
+
+    <div class="post-content">
+        <div class="post-excerpt">
+            
+                <h3 id="广播网络链路"><a href="#广播网络链路" class="headerlink" title="广播网络链路"></a>广播网络链路</h3><p>一个节点发送信号，多个节点接收信号，多个节点接收信号的状态有所不同细分成以下三个网络。</p>
+<h4 id="单工广播网络"><a href="#单工广播网络" class="headerlink" title="单工广播网络"></a>单工广播网络</h4><p>单通道通信，在一个网络环境中，一个只能发送信息，不能接收信息。其它主机只能接收信息，不能发送信息。即单工广播网络</p>
+<h4 id="半双工广播网络"><a href="#半双工广播网络" class="headerlink" title="半双工广播网络"></a>半双工广播网络</h4><p>在一个网络环境中，存在双向网络通信，这些节点既能发送消息，也能接收消息，但同一时刻只能有单个节点在发送信息。即半双工广播网络</p>
+<h4 id="全双工广播网络"><a href="#全双工广播网络" class="headerlink" title="全双工广播网络"></a>全双工广播网络</h4><p>在一个网络环境中，存在双向网络通信，一个节点技能发送消息，也能接收消息，这些节点同一时刻既要能发送消息，也需要接收消息。即全双工广播网络。比如说大合唱活动。</p>
+<h3 id="点对点网络链路"><a href="#点对点网络链路" class="headerlink" title="点对点网络链路"></a>点对点网络链路</h3>
+            
+            <p class="more">
+                <a href="https://995270418l.github.io/2018/05/06/net3/">Read More</a>
+            </p>
+        </div>
+        <div class="post-thumbnail" data-img="">
+            <a href="https://995270418l.github.io/2018/05/06/net3/" title="LAN技术">
+                
+                    <img class="thumbnail" src="/img/default.png" data-echo="/img/thumbnail/6.jpg" alt="默认配图" >
+                
+            </a>
+        </div>
+    </div>
+</article>
+
+    
+        <!-- 文章 -->
+<article class="post">
+    <header>
+        <!-- 标签这有且只能显示一个 -->
+        
+        <a class="cat-link" href="/categories/计算机网络/">计算机网络</a>
+        
+        <!-- 文章标题 -->
+        
+    <h3 class="post-title">
     	<a href="https://995270418l.github.io/2018/05/04/net2/">
     		OSI模型和TCP/IP模型
     	</a>
@@ -333,12 +493,22 @@
     </li>
     
     <li>
-        <a href="/categories/计算机网络/">计算机网络</a>
+        <a href="/categories/健康生活/">健康生活</a>
         <span class="badge">(1)</span>
     </li>
     
     <li>
-        <a href="/categories/健康生活/">健康生活</a>
+        <a href="/categories/spring/">spring</a>
+        <span class="badge">(1)</span>
+    </li>
+    
+    <li>
+        <a href="/categories/计算机网络/">计算机网络</a>
+        <span class="badge">(3)</span>
+    </li>
+    
+    <li>
+        <a href="/categories/机器学习/matlab/">matlab</a>
         <span class="badge">(1)</span>
     </li>
     
@@ -348,7 +518,7 @@
     </li>
     
     <li>
-        <a href="/categories/机器学习/matlab/">matlab</a>
+        <a href="/categories/spring/java/">java</a>
         <span class="badge">(1)</span>
     </li>
     
@@ -367,6 +537,8 @@
   
     <a class="tag-item" href="/tags/算法/" title="算法">算法 (1)</a>
   
+    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
+  
     <a class="tag-item" href="/tags/jvm/" title="jvm">jvm (1)</a>
   
     <a class="tag-item" href="/tags/微积分/" title="微积分">微积分 (1)</a>
@@ -377,17 +549,19 @@
   
     <a class="tag-item" href="/tags/数理统计/" title="数理统计">数理统计 (1)</a>
   
-    <a class="tag-item" href="/tags/multipartThread/" title="multipartThread">multipartThread (1)</a>
-  
-    <a class="tag-item" href="/tags/网络协议栈/" title="网络协议栈">网络协议栈 (1)</a>
-  
     <a class="tag-item" href="/tags/痔疮/" title="痔疮">痔疮 (1)</a>
-  
-    <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
   
     <a class="tag-item" href="/tags/jenkins/" title="jenkins">jenkins (1)</a>
   
     <a class="tag-item" href="/tags/powershell/" title="powershell">powershell (1)</a>
+  
+    <a class="tag-item" href="/tags/framework/" title="framework">framework (1)</a>
+  
+    <a class="tag-item" href="/tags/网络协议栈/" title="网络协议栈">网络协议栈 (2)</a>
+  
+    <a class="tag-item" href="/tags/面试/" title="面试">面试 (1)</a>
+  
+    <a class="tag-item" href="/tags/TCP-IP协议/" title="TCP/IP协议">TCP/IP协议 (1)</a>
   
 </div>
     </section>
